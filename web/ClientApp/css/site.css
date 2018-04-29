@@ -1,0 +1,331 @@
+html
+{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+body
+{
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+#react-app
+{
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+
+.main-nav
+{
+	display: flex;
+	flex-direction: column;
+	flex: 0 0 250px;
+}
+
+	.main-nav li .glyphicon
+	{
+		margin-right: 10px;
+	}
+
+	/* Highlighting rules for nav menu items */
+
+	.main-nav li a.active,
+	.main-nav li a.active:hover,
+	.main-nav li a.active:focus
+	{
+		background-color: #4189c7;
+		color: white;
+	}
+
+.top-nav
+{
+	padding-left: 10px;
+	padding-right: 10px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+@media (max-width: 767px)
+{
+	/* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
+	body
+	{
+		padding-top: 50px;
+	}
+}
+
+@media (min-width: 768px)
+{
+	/* On small screens, convert the nav menu to a vertical sidebar */
+	.main-nav
+	{
+		height: 100%;
+		width: calc(25% - 20px);
+	}
+
+		.main-nav .navbar-inverse
+		{
+			border-radius: 0px;
+			border-width: 0px;
+			display: flex;
+			flex-direction: column;
+		}
+
+			.main-nav .navbar-inverse li a
+			{
+				padding: 10px 16px;
+				border-radius: 4px;
+				color: #ccc;
+			}
+
+				.main-nav .navbar-inverse li a.active
+				{
+					background-color: #4189c7 !important;
+					color: #fff;
+				}
+
+				.main-nav .navbar-inverse li a:hover
+				{
+					background-color: #222;
+					color: #fff;
+				}
+
+		.main-nav .navbar a
+		{
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+	.nav
+	{
+		padding: 0 4px 0 4px;
+	}
+}
+
+.panel-login
+{
+	border-color: #ccc;
+	margin-top: 100px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+	.panel-login > .panel-heading
+	{
+		color: #00415d;
+		background-color: #fff;
+		border-color: #fff;
+		text-align: center;
+	}
+
+		.panel-login > .panel-heading a
+		{
+			text-decoration: none;
+			color: #666;
+			font-weight: bold;
+			font-size: 15px;
+		}
+
+			.panel-login > .panel-heading a.active
+			{
+				color: #029f5b;
+				font-size: 18px;
+			}
+
+	.panel-login input[type=checkbox]
+	{
+		margin-right: 5px;
+	}
+
+.invalid
+{
+	border-color: red;
+}
+
+.table-container
+{
+	margin-top: 20px;
+	flex: 1 0 400px;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+	border: 1px solid #eee;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+	.table-container .table
+	{
+		margin-bottom: 0 !important;
+	}
+
+		.table-container .table tr:hover
+		{
+			background: #d2ebfb;
+			cursor: pointer;
+		}
+
+		.table-container .table .selected
+		{
+			background: #87cefa !important;
+			color: #000;
+		}
+
+		.table-container .table th:first-child, .table-container .table td:first-child
+		{
+			width: 70px;
+			text-align: center;
+		}
+
+.form-group:only-child
+{
+	margin-bottom: 0;
+}
+
+.margin-top-lg
+{
+	margin-top: 20px;
+}
+
+.margin-bottom-lg
+{
+	margin-bottom: 20px;
+}
+
+.flex-row
+{
+	display: flex;
+	flex-direction: row;
+}
+
+.flex-column
+{
+	display: flex;
+	flex-direction: column;
+}
+
+.overflow-y
+{
+	overflow-y: auto;
+}
+
+.flex
+{
+	flex: 1;
+}
+
+.flex-justify-center
+{
+	justify-content: center;
+}
+
+.flex-align-center
+{
+	align-items: center;
+}
+
+.calendar-buttons button:not(:last-child)
+{
+	width: 100px;
+	margin-right: 5px;
+}
+
+.calendar-title
+{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.loading
+{
+	height: 40vh;
+	background-image: url('/dist/images/loading.gif');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 50px;
+}
+
+	.loading img
+	{
+		width: 50px;
+		height: 50px;
+	}
+
+.content
+{
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 20px;
+}
+
+.admin-content .edit-event-form
+{
+	margin-top: 20px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.edit-event-form .checkbox
+{
+	margin-right: 10px;
+}
+
+.checkbox
+{
+	display: inline-block;
+}
+
+.admin-content .event-list-buttons
+{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.admin-content .event-list-buttons button
+{
+	margin-right: 10px;
+}
+
+.admin-content .event-list-buttons .checkbox
+{
+	margin-right: 5px;
+}
+
+.react-datepicker
+{
+	font-size: 0.8em !important;
+}
+
+.react-datepicker-wrapper
+{
+	width: 100%;
+}
+
+	.react-datepicker-wrapper > div
+	{
+		width: 100%;
+	}
+
+.search-input
+{
+	width: 300px;
+}
+
+ul
+{
+	-webkit-padding-start: 0;
+	padding-right: 0 !important;
+}
