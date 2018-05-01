@@ -43,7 +43,7 @@ export class EventsList extends React.Component<IEventsListProps, IEventsListSta
 			return this.props.events;
 
 		if (this.props.showRecurring && !!this.props.months)
-			return this.calendarService.getProjectedEvents(this.props.events as Array<CalendarEvent>, moment().add(this.props.months, "months"));
+			return this.calendarService.getProjectedEvents(this.props.events as Array<CalendarEvent>, moment().add(this.props.months, "months"), false);
 
 		return this.props.events;
 	}
@@ -62,8 +62,8 @@ export class EventsList extends React.Component<IEventsListProps, IEventsListSta
 				</td>
 				<td>{event.id}</td>
 				<td>{event.title}</td>
-				<td>{event.start.toString()}</td>
-				<td>{event.end.toString()}</td>
+				<td>{!!event.start ? event.start.toString() : ''}</td>
+				<td>{!!event.end ? event.end.toString() : ''}</td>
 				<td>{RecurringPeriod[event.recurring]}</td>
 			</tr>
 		);

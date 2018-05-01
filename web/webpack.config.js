@@ -13,7 +13,7 @@ module.exports = (env) => {
 		resolve: { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
 	    devServer: {
 			contentBase: './wwwroot',
-			port: '3000',
+			port: '3001',
 			// Serve webpack-dev-server over HTTPS Protocol.
 			// Includes a self-signed certificate that is used when serving the requests.
 			https: false

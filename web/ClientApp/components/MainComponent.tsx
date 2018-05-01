@@ -64,7 +64,12 @@ export class MainComponent extends React.Component<IMainComponentProps & RouteCo
 		}
 	}
 
-	private onEventClicked(event: CalendarEvent)
+	private onCalendarEventClicked(event: CalendarEvent)
+	{
+		//alert("Clicked " + event.title);
+	}
+
+	private onListEventClicked(event: CalendarEvent)
 	{
 		if (!!this.state.filteredEvents)
 		{
@@ -168,8 +173,7 @@ export class MainComponent extends React.Component<IMainComponentProps & RouteCo
 		return <div>
 			       <div className="flex-row margin-bottom-lg calendar-buttons">
 
-
-				       <button className="btn btn-default" onClick={e => this.goBack()}>Previous</button>
+						<button className="btn btn-default" onClick={e => this.goBack()}>Previous</button>
 				       <button className="btn btn-success" onClick={e => this.goToday()}>Today</button>
 				       <button className="btn btn-default" onClick={e => this.goForward()}>Next</button>
 				       <div className="flex flex-row flex-align-center flex-justify-center calendar-title">{title}</div>
@@ -178,21 +182,23 @@ export class MainComponent extends React.Component<IMainComponentProps & RouteCo
 				       <button className={dayClasses} onClick={e => this.setDisplayMode(DisplayMode.Day)}>Day</button>
 
 				       <br />
-			       </div>
-				   <Calendar mode={this.props.displayMode} currentDate={this.state.currentDate} events={this.props.allEvents} onEventClicked={(e) => this.onEventClicked(e)} cellHeight={21} />
+				   </div>
+
+				   <Calendar mode={this.props.displayMode} currentDate={this.state.currentDate} events={events} onEventClicked={(e) => this.onCalendarEventClicked(e)} cellHeight={21} />
+
 		       </div>;
 	}
 
 	private renderEventsTable(events: CalendarEvent[])
 	{
-		return <EventsList events={this.state.filteredEvents} onEventClicked={(e) => this.onEventClicked(e)} />;
+		return <EventsList events={this.state.filteredEvents} onEventClicked={(e) => this.onListEventClicked(e)} />;
 	}
 
 	public render()
 	{
 		let contents = !!this.state.filteredEvents ? this.renderEventsTable(this.state.filteredEvents as Array<CalendarEvent>) : null;
 		return <div className="content">
-			       {this.renderCalendar(this.state.filteredEvents)}
+					{this.renderCalendar(this.state.filteredEvents)}
 			       <h4>Search Events</h4>
 			       <div className="input-group search-input">
 				       <input type="text" className="form-control" placeholder="Search for..." value={this.state.searchText} ref={el => this.searchInput = el} onChange={e => this.onSearchTextChanged(e)} onKeyDown={e => this.onSearchKeyDown(e)} />

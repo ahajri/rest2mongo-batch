@@ -70,6 +70,18 @@ export class Layout extends React.Component<ILayoutProps & RouteComponentProps<{
 		{
 			let dateCompare = (dt1: moment.Moment, dt2: moment.Moment): number => moment.utc(dt1).diff(moment.utc(dt2));
 
+			if (!x.start)
+				return -1;
+
+			if (!x.end)
+				return -1;
+
+			if (!y.start)
+				return 1;
+
+			if (!y.end)
+				return 1;
+
 			if (x.allDay && y.allDay)
 				return dateCompare(x.start, y.start);
 
@@ -79,7 +91,7 @@ export class Layout extends React.Component<ILayoutProps & RouteComponentProps<{
 			if (y.allDay)
 				return 1;
 
-			return dateCompare(x.start, y.end);
+			return dateCompare(x.start, y.start);
 		});
 	}
 

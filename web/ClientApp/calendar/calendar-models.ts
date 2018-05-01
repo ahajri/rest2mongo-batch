@@ -4,8 +4,8 @@ export class CalendarEvent
 {
 	public id: number;
 	public title: string;
-	public start: moment.Moment;
-	public end: moment.Moment;
+	public start: moment.Moment | null;
+	public end: moment.Moment | null;
 	public startStr: string;
 	public endStr: string;
 	public isSelected: boolean;
@@ -20,8 +20,8 @@ export class CalendarEvent
 		let event = new CalendarEvent();
 		event.id = this.id;
 		event.title = this.title;
-		event.start = moment(this.start);
-		event.end = moment(this.end);
+		event.start = !!this.start ? moment(this.start) : null;
+		event.end = !!this.end ? moment(this.end) : null;
 		event.startStr = this.startStr;
 		event.endStr = this.endStr;
 		event.isSelected = this.isSelected;

@@ -99,7 +99,7 @@
 
 	.calendar.daily .calendar-events
 	{
-		height: 42px;
+		height: 50px;
 		overflow-y: auto;
 	}
 

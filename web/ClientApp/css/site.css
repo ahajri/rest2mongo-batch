@@ -294,15 +294,15 @@ body
 	align-items: center;
 }
 
-.admin-content .event-list-buttons button
-{
-	margin-right: 10px;
-}
+	.admin-content .event-list-buttons button
+	{
+		margin-right: 10px;
+	}
 
-.admin-content .event-list-buttons .checkbox
-{
-	margin-right: 5px;
-}
+	.admin-content .event-list-buttons .checkbox
+	{
+		margin-right: 5px;
+	}
 
 .react-datepicker
 {
@@ -329,3 +329,15 @@ ul
 	-webkit-padding-start: 0;
 	padding-right: 0 !important;
 }
+
+.modal
+{
+	display: block !important;
+	background-color: rgba(150, 150, 150, 0.5);
+}
+
+	.modal .modal-dialog
+	{
+		padding-left: 250px;
+		padding-top: 150px;
+	}

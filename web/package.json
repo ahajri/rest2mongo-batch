@@ -1,7 +1,7 @@
 {
-	"name": "HeavenCalendar",
+	"name": "Demo",
 	"private": true,
-	"version": "1.0.0",
+	"version": "0.0.0",
 	"scripts": {
 		"start": "webpack-dev-server"
 	},

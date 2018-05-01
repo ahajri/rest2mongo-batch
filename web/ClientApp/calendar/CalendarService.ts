@@ -19,14 +19,14 @@ export class Rect
 
 export class CalendarService
 {
-	public getDayViewBlocks(rcCalendar: Rect | null, events: Array<CalendarEvent>, start: moment.Moment, days: number, cellHeight: number): Array<Block>
+	public getDayViewBlocks(rcCalendar: Rect | null, events: Array<CalendarEvent> | null, selectedOnly: boolean, start: moment.Moment, days: number, cellHeight: number): Array<Block>
 	{
-		if (!rcCalendar)
+		if (!rcCalendar || !events)
 			return [];
 
 		let end = moment(start).add(days, "days");
 
-		let projectedEvents = this.getProjectedEvents(events, end);
+		let projectedEvents = this.getProjectedEvents(events, end, selectedOnly);
 
 		let slicedEvents = this.sliceDayEvents(projectedEvents);
 
@@ -41,11 +41,14 @@ export class CalendarService
 			for (let j = 0; j < slicedEvents.length; j++)
 			{
 				let event = slicedEvents[j];
-				if (event.start.isBetween(startOfDay, endOfDay, undefined, "[]"))
+				if (!!event.start)
 				{
-					let block = this.createBlock(event, rcCalendar, days, 60, i, cellHeight);
-					if (!!block)
-						dayBlocks.push(block);
+					if (event.start.isBetween(startOfDay, endOfDay, undefined, "[]"))
+					{
+						let block = this.createBlock(event, rcCalendar, days, 60, i, cellHeight);
+						if (!!block)
+							dayBlocks.push(block);
+					}
 				}
 			}
 
@@ -66,7 +69,7 @@ export class CalendarService
 		let blockLeft = rcCalendar.x + timeColumnWidth;
 		let blockWidth = (rcCalendar.width - timeColumnWidth) / days;
 
-		let calendarY = rcCalendar.y + (cellHeight * 3);
+		let calendarY = rcCalendar.y + (cellHeight * 3) + 8;
 
 		///////////////////////////////////////////////////////////////////////////////
 
@@ -75,9 +78,15 @@ export class CalendarService
 		block.isEnd = event.isEndInternal;
 		block.event = event.clone();
 
+		if (!event.start)
+			return null;
+
+		if (!event.end)
+			return null;
+
 		let minutes = moment(event.end).diff(event.start, "minutes");
 		if (minutes <= 0)
-			return null; // TODO
+			return null;
 
 		let blockHeight = (minutes / 60) * cellHeight;
 
@@ -98,13 +107,15 @@ export class CalendarService
 		return block;
 	}
 
-	public getProjectedEvents(events: Array<CalendarEvent>, end: moment.Moment): Array<CalendarEvent>
+	public getProjectedEvents(events: Array<CalendarEvent>, end: moment.Moment, selectedOnly: boolean): Array<CalendarEvent>
 	{
 		let actualEvents: Array<CalendarEvent> = [];
 
 		for (let i = 0; i < events.length; i++)
 		{
 			let event = events[i];
+			if (selectedOnly && !event.isSelected)
+				continue;
 
 			actualEvents.push(event);
 
@@ -138,7 +149,13 @@ export class CalendarService
 		for (let i = 0; i < events.length; i++)
 		{
 			let event = events[i];
-			if (event.allDay)
+			if (event.allDay || !event.isSelected)
+				continue;
+
+			if (!event.start)
+				continue;
+
+			if (!event.end)
 				continue;
 
 			if (event.start.year() !== event.end.year() || event.start.month() !== event.end.month() || event.start.date() !== event.end.date())
@@ -234,6 +251,12 @@ export class CalendarService
 
 	private insertRecurringEvents(event: CalendarEvent, events: Array<CalendarEvent>, end: moment.Moment, period: moment.unitOfTime.DurationConstructor)
 	{
+		if (!event.start)
+			return;
+
+		if (!event.end)
+			return;
+
 		let dt = moment(event.start).add(1, period);
 
 		let duration = moment.duration(moment(event.end).diff(moment(event.start)));

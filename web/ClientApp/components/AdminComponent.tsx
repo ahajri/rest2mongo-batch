@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as moment from "moment";
 import { CalendarEvent, RecurringPeriod } from "../calendar/calendar-models";
-import { CalendarService } from "../calendar/CalendarService";
 import { EditEvent } from "./EditEvent";
 import { EventsList } from "./EventsList";
+import { ConfirmPopup } from "./ConfirmPopup";
 
 export interface IAdminComponentProps
 {
@@ -14,6 +14,8 @@ export interface IAdminComponentProps
 export interface IAdminComponentState
 {
 	showRecurring: boolean;
+	isDeletePopupVisible: boolean;
+	selectedEventId: number;
 }
 
 export class AdminComponent extends React.Component<IAdminComponentProps, IAdminComponentState> {
@@ -23,7 +25,9 @@ export class AdminComponent extends React.Component<IAdminComponentProps, IAdmin
 		super(props);
 
 		this.state = {
-			showRecurring: false
+			showRecurring: false,
+			isDeletePopupVisible: false,
+			selectedEventId: -1
 		};
 	}
 
@@ -91,9 +95,9 @@ export class AdminComponent extends React.Component<IAdminComponentProps, IAdmin
 
 		let newEvent = new CalendarEvent();
 		newEvent.id = maxId + 1;
-		newEvent.title = "Event " + newEvent.id;
-		newEvent.start = moment();
-		newEvent.end = moment().add(1, "hour");
+		newEvent.title = "";
+		newEvent.start = null;
+		newEvent.end = null;
 		newEvent.recurring = RecurringPeriod.None;
 		newEvent.isSelected = true;
 
@@ -101,6 +105,8 @@ export class AdminComponent extends React.Component<IAdminComponentProps, IAdmin
 
 		if (!!this.props.onChange)
 			this.props.onChange(events);
+
+		this.setState({ ...this.state, selectedEventId: newEvent.id });
 	}
 
 	private onDeleteClick()
@@ -110,13 +116,28 @@ export class AdminComponent extends React.Component<IAdminComponentProps, IAdmin
 
 		let selectedEvents = this.props.allEvents.filter((event) => event.isSelected);
 		if (selectedEvents.length === 1)
-		{
-			let events = [...this.props.allEvents];
-			let index = events.indexOf(selectedEvents[0]);
-			events.splice(index, 1);
+			this.setState({ ...this.state, isDeletePopupVisible: true, selectedEventId: selectedEvents[0].id });
+	}
 
-			if (!!this.props.onChange)
-				this.props.onChange(events);
+	private onConfirmDeleteClick(confirmed: boolean): void
+	{
+		this.setState({ ...this.state, isDeletePopupVisible: false, selectedEventId: -1 });
+
+		if (!this.props.allEvents)
+			return;
+
+		if (confirmed)
+		{
+			let editedEvents = this.props.allEvents.filter((event) => event.id === this.state.selectedEventId);
+			if (editedEvents.length === 1)
+			{
+				let newEvents = [...this.props.allEvents];
+				let index = this.props.allEvents.indexOf(editedEvents[0]);
+				newEvents.splice(index, 1);
+
+				if (!!this.props.onChange)
+					this.props.onChange(newEvents);
+			}
 		}
 	}
 
@@ -176,11 +197,13 @@ export class AdminComponent extends React.Component<IAdminComponentProps, IAdmin
 		let selected = selectedEvents.length > 0 ? selectedEvents[0] : null;
 
 		let editForm = <EditEvent event={selected} onChange={(e) => this.onEventChanged(e)} />;
+		let deletePopup = this.state.isDeletePopupVisible ? <ConfirmPopup onClose={(confirmed) => this.onConfirmDeleteClick(confirmed)} /> : null;
 
 		return <div className="content admin-content">
 					{this.renderButtons()}
 					{this.renderEventsTable()}
-			       {editForm}
+					{editForm}
+					{deletePopup}
 		       </div>;
 	}
 }

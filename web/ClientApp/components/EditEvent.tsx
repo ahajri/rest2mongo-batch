@@ -59,6 +59,34 @@ export class EditEvent extends React.Component<IEditEventProps, IEditEventState>
 		this.updateValue(date, prop);
 	}
 
+	private renderDatePickerWithRestriction(start: moment.Moment, end: moment.Moment, isStart: boolean, isEnd: boolean, dateFormat: string, timeFormat: string, timeIntervals: number)
+	{
+		return (<DatePicker className="form-control"
+		            selected={isStart ? start : end}
+					selectsStart={isStart}
+		            selectsEnd={isEnd}
+		            startDate={start}
+		            endDate={end}
+		            dateFormat={dateFormat}
+		            showTimeSelect
+		            timeIntervals={timeIntervals}
+		            timeFormat={timeFormat}
+		            onChange={(date) => this.onDateChange(date, isStart ? "start" : "end")} />);
+	}
+
+	private renderDatePicker(start: moment.Moment, end: moment.Moment, isStart: boolean, isEnd: boolean, dateFormat: string, timeFormat: string, timeIntervals: number)
+	{
+		return (<DatePicker className="form-control"
+							selected={isStart ? start : end}
+							selectsStart={isStart}
+		                    selectsEnd={isEnd}
+		                    dateFormat={dateFormat}
+		                    showTimeSelect
+		                    timeIntervals={timeIntervals}
+		                    timeFormat={timeFormat}
+		                    onChange={(date) => this.onDateChange(date, isStart ? "start" : "end")} />);
+	}
+
 	public render()
 	{
 		if (!this.props.event)
@@ -67,6 +95,14 @@ export class EditEvent extends React.Component<IEditEventProps, IEditEventState>
 		let dateFormat = "DD.MM.YYYY HH:mm";
 		let timeFormat = "HH:mm";
 		let timeIntervals = 30;
+
+		let datePickerStart = (!!this.props.event.start && !!this.props.event.end)
+			? this.renderDatePickerWithRestriction(this.props.event.start, this.props.event.end, true, false, dateFormat, timeFormat, timeIntervals)
+			: this.renderDatePicker(this.props.event.start as moment.Moment, this.props.event.end as moment.Moment, true, false, dateFormat, timeFormat, timeIntervals);
+
+		let datePickerEnd = (!!this.props.event.start && !!this.props.event.end)
+			? this.renderDatePickerWithRestriction(this.props.event.start, this.props.event.end, false, true, dateFormat, timeFormat, timeIntervals)
+			: this.renderDatePicker(this.props.event.start as moment.Moment, this.props.event.end as moment.Moment, false, true, dateFormat, timeFormat, timeIntervals);
 
 		return <div className="edit-event-form">
 			<div className="col-xs-6 col-sm-4 col-md-4 col-lg-3">
@@ -78,16 +114,7 @@ export class EditEvent extends React.Component<IEditEventProps, IEditEventState>
 
 				<div className="form-group">
 					<label className="control-label">Start</label>
-					<DatePicker className="form-control"
-						selected={this.props.event.start}
-						selectsStart
-					    startDate={this.props.event.start}
-					    endDate={this.props.event.end}
-						dateFormat={dateFormat}
-						showTimeSelect
-						timeIntervals={timeIntervals}
-						timeFormat={timeFormat}
-						onChange={(date) => this.onDateChange(date, "start")} />
+					{datePickerStart}
 				</div>
 
 			</div>
@@ -106,16 +133,7 @@ export class EditEvent extends React.Component<IEditEventProps, IEditEventState>
 				
 				<div className="form-group">
 					<label className="control-label">End</label>
-					<DatePicker className="form-control"
-						selected={this.props.event.end}
-						selectsEnd
-						startDate={this.props.event.start}
-						endDate={this.props.event.end}
-						dateFormat={dateFormat}
-						showTimeSelect
-						timeFormat={timeFormat}
-						timeIntervals={timeIntervals}
-						onChange={(date) => this.onDateChange(date, "end")} />
+					{datePickerEnd}
 				</div>
 
 			</div>

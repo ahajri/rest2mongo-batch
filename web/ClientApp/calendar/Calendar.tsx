@@ -82,8 +82,8 @@ export class Calendar extends React.Component<ICalendarProps, ICalendarState>
 			let boundingRect = this.calendar.getBoundingClientRect();
 
 			let rect = {
-				x: 0,//boundingRect.left,
-				y: 0, //boundingRect.top,
+				x: 0,
+				y: 0,
 				width: boundingRect.width,
 				height: boundingRect.height
 			};
@@ -135,7 +135,7 @@ export class Calendar extends React.Component<ICalendarProps, ICalendarState>
 
 		return dayEvents.filter(x =>
 		{
-			return moment(x.start).isBetween(start, end, "hours", "[]");
+			return !!x.start && moment(x.start).isBetween(start, end, "hours", "[]");
 		});
 	}
 
@@ -150,6 +150,12 @@ export class Calendar extends React.Component<ICalendarProps, ICalendarState>
 				return false;
 
 			if (!x.allDay && skipNonAllDay)
+				return false;
+
+			if (!x.start)
+				return false;
+
+			if (!x.end)
 				return false;
 
 			let eventStart = moment(x.start);
@@ -168,6 +174,9 @@ export class Calendar extends React.Component<ICalendarProps, ICalendarState>
 
 	private isStartingOn(event: CalendarEvent, day: moment.Moment)
 	{
+		if (!event.start)
+			return false;
+
 		let eventStart = moment(event.start);
 		if (event.allDay)
 			eventStart = eventStart.startOf("day");
@@ -183,6 +192,9 @@ export class Calendar extends React.Component<ICalendarProps, ICalendarState>
 
 	private isEndingOn(event: CalendarEvent, day: moment.Moment)
 	{
+		if (!event.end)
+			return false;
+
 		let eventEnd = moment(event.end);
 		if (event.allDay)
 			eventEnd = eventEnd.endOf("day");
@@ -201,7 +213,7 @@ export class Calendar extends React.Component<ICalendarProps, ICalendarState>
 		if (!this.props.events)
 			return [];
 
-		return this.calendarService.getProjectedEvents(this.props.events as Array<CalendarEvent>, end);
+		return this.calendarService.getProjectedEvents(this.props.events as Array<CalendarEvent>, end, true);
 	}
 
 	private getEventClasses(event: CalendarEvent, day: moment.Moment)
@@ -229,7 +241,7 @@ export class Calendar extends React.Component<ICalendarProps, ICalendarState>
 
 	private renderAllDayEvents(events: Array<CalendarEvent>, day: moment.Moment): JSX.Element
 	{
-		let allDayEvents = this.getDayEvents(events, day, false, true).filter((x) => moment(x.start)).map((event, index) =>
+		let allDayEvents = this.getDayEvents(events, day, false, true).filter((x) => !!x.start && moment(x.start)).map((event, index) =>
 		{
 			let eventClassName = this.getEventClasses(event, day);
 
@@ -297,7 +309,7 @@ export class Calendar extends React.Component<ICalendarProps, ICalendarState>
 			cells = [];
 		}
 
-		let blocks = this.calendarService.getDayViewBlocks(this.getCalendarRect(), this.props.events as Array<CalendarEvent>, startDate, daysToRender, this.props.cellHeight);
+		let blocks = this.calendarService.getDayViewBlocks(this.getCalendarRect(), this.props.events, true, startDate, daysToRender, this.props.cellHeight);
 
 		let nodes = blocks.map((block) =>
 		{
@@ -318,7 +330,9 @@ export class Calendar extends React.Component<ICalendarProps, ICalendarState>
 			if (block.isEnd)
 				classes.push("end");
 
-			let details = block.event.start.format('HH:mm') + ' - ' + block.event.end.format('HH:mm');
+			let details = "";
+			if (!!block.event.start && !!block.event.end)
+				details = block.event.start.format('HH:mm') + ' - ' + block.event.end.format('HH:mm');
 
 			return <div className={classes.join(' ')} style={style} onClick={() => this.onEventClicked(block.event)}>
 					<span>
@@ -429,9 +443,6 @@ export class Calendar extends React.Component<ICalendarProps, ICalendarState>
 	public render()
 	{
 		let className = "calendar";
-
-		if (!this.props.events)
-			return <div className={className}></div>;
 
 		let content: JSX.Element;
 		switch (this.props.mode)
