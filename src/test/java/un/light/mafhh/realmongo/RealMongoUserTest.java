@@ -21,9 +21,9 @@ import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.annotation.ProfileValueSourceConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import un.light.mafhh.collection.User;
-import un.light.mafhh.mongo.config.SystemProfileValueSource2;
-import un.light.mafhh.security.exception.RestException;
+import com.ahajri.heaven.calendar.collection.UserAuth;
+import com.ahajri.heaven.calendar.mongo.config.SystemProfileValueSource2;
+import com.ahajri.heaven.calendar.security.exception.RestException;
 
 @ProfileValueSourceConfiguration(value = SystemProfileValueSource2.class)
 //@IfProfileValue(name = ACTIVE_PROFILES_PROPERTY_NAME, value = "it")
@@ -35,12 +35,12 @@ public class RealMongoUserTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
-	private static User userRecordReturned;
+	private static UserAuth userRecordReturned;
 
 	@Test
 	public void test1PostUser() {
-		User userRecord = new User("ahajri3", "RealTestAhajri3Pwd");
-		ResponseEntity<User> responseEntity = restTemplate.postForEntity("/users/post", userRecord, User.class);
+		UserAuth userRecord = new UserAuth("ahajri3", "RealTestAhajri3Pwd");
+		ResponseEntity<UserAuth> responseEntity = restTemplate.postForEntity("/users/post", userRecord, UserAuth.class);
 		userRecordReturned = responseEntity.getBody();
 		assertNotNull("Should have an PK", userRecordReturned.getId());
 	}
@@ -53,7 +53,7 @@ public class RealMongoUserTest {
 
 		HttpEntity entity = new HttpEntity(headers);
 
-		HttpEntity<User> response = restTemplate.exchange(url, HttpMethod.GET, entity, User.class);
+		HttpEntity<UserAuth> response = restTemplate.exchange(url, HttpMethod.GET, entity, UserAuth.class);
 		System.out.println("User found -> " + response.getBody());
 
 		//
@@ -64,7 +64,7 @@ public class RealMongoUserTest {
 	public void test3DeleteUser() {
 		String url = String.format("/users/delete/%s", userRecordReturned.getUsername());
 		restTemplate.delete(url);
-		assertNull(restTemplate.getForEntity("/users/byUsername/" + userRecordReturned.getUsername(), User.class)
+		assertNull(restTemplate.getForEntity("/users/byUsername/" + userRecordReturned.getUsername(), UserAuth.class)
 				.getBody());
 	}
 

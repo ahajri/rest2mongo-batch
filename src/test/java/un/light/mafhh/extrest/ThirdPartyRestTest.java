@@ -29,14 +29,14 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import un.light.mafhh.constants.KeyConstants;
-import un.light.mafhh.constants.TimeConstants;
-import un.light.mafhh.constants.UrlConstants;
-import un.light.mafhh.security.exception.TechnicalException;
-import un.light.mafhh.service.PrayTimeService;
-import un.light.mafhh.service.impl.PrayTimeServiceImpl;
-import un.light.mafhh.utils.HCDateUtils;
-import un.light.mafhh.utils.UrlUtils;
+import com.ahajri.heaven.calendar.constants.KeyConstants;
+import com.ahajri.heaven.calendar.constants.TimeConstants;
+import com.ahajri.heaven.calendar.constants.UrlConstants;
+import com.ahajri.heaven.calendar.security.exception.TechnicalException;
+import com.ahajri.heaven.calendar.service.PrayTimeService;
+import com.ahajri.heaven.calendar.service.impl.PrayTimeServiceImpl;
+import com.ahajri.heaven.calendar.utils.HCDateUtils;
+import com.ahajri.heaven.calendar.utils.UrlUtils;
 
 @RunWith(SpringRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

@@ -6,7 +6,7 @@ export class NavMenu extends React.Component<{}, {}> {
         return <div className='main-nav'>
                 <div className='navbar-inverse flex flex-column'>
                 <div className='navbar-header'>
-                    <Link className='navbar-brand' to={ '/' }>Smart Calendar</Link>
+                    <Link className='navbar-brand' to={ '/' }>Heaven Calendar</Link>
                 </div>
                 <div className=''>
                     <ul className='nav'>

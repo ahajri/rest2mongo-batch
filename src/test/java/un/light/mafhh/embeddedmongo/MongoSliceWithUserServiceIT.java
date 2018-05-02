@@ -14,9 +14,9 @@ import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.annotation.ProfileValueSourceConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import un.light.mafhh.collection.User;
-import un.light.mafhh.mongo.config.SystemProfileValueSource2;
-import un.light.mafhh.service.impl.UserServiceImpl;
+import com.ahajri.heaven.calendar.collection.UserAuth;
+import com.ahajri.heaven.calendar.mongo.config.SystemProfileValueSource2;
+import com.ahajri.heaven.calendar.service.impl.UserServiceImpl;
 
 //@ProfileValueSourceConfiguration(value = SystemProfileValueSource2.class)
 //@IfProfileValue(name = ACTIVE_PROFILES_PROPERTY_NAME, value = "it-embedded") //"spring.profiles.active"
@@ -30,8 +30,8 @@ public class MongoSliceWithUserServiceIT {
 
     @Test
     public void ensureLoggingWorks() {
-        User userRecord = new User("TestServiceUser", "TestServiceUserPwd");
-        User logWithPK = userService.save(userRecord);
+        UserAuth userRecord = new UserAuth("TestServiceUser", "TestServiceUserPwd");
+        UserAuth logWithPK = userService.save(userRecord);
         assertNotNull(logWithPK.getId());
         assertEquals(userRecord.getPassword(), logWithPK.getPassword());
     }
