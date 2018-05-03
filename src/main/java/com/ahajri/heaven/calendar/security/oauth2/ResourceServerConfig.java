@@ -7,18 +7,18 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 
-@Configuration
-@EnableResourceServer
-public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+//@Configuration
+//@EnableResourceServer
+public class ResourceServerConfig /*extends ResourceServerConfigurerAdapter*/ {
 
 private static final String RESOURCE_ID = "resource_id";
 	
-	@Override
+	//@Override
 	public void configure(ResourceServerSecurityConfigurer resources) {
 		resources.resourceId(RESOURCE_ID).stateless(false);
 	}
 
-	@Override
+	//@Override
 	public void configure(HttpSecurity http) throws Exception {
         http.anonymous().disable()
                 .authorizeRequests()

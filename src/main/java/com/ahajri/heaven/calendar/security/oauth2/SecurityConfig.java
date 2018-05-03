@@ -25,10 +25,10 @@ import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.Resource;
 
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//@Configuration
+//@EnableWebSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfig /*extends WebSecurityConfigurerAdapter*/ {
 
 	@Resource(name = "userService")
 	private UserDetailsService userDetailsService;
@@ -36,10 +36,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private ClientDetailsService clientDetailsService;
 
-	@Override
+	//@Override
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
+		return null;//super.authenticationManagerBean();
 	}
 
 	@Autowired
@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
 	}
 
-	@Override
+	//@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().anonymous().disable().authorizeRequests().antMatchers("/api-docs/**").permitAll();
 	}

@@ -10,9 +10,9 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
-@Configuration
-@EnableAuthorizationServer
-public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+//@Configuration
+//@EnableAuthorizationServer
+public class AuthorizationServerConfig /*extends AuthorizationServerConfigurerAdapter */{
 	static final String CLIEN_ID = "hcalendar-client";
 	static final String CLIENT_SECRET = "devglan-secret";
 	static final String GRANT_TYPE = "password";
@@ -35,7 +35,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	@Override
+	//@Override
 	public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
 
 		configurer
@@ -48,7 +48,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				refreshTokenValiditySeconds(FREFRESH_TOKEN_VALIDITY_SECONDS);
 	}
 
-	@Override
+	//@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints.tokenStore(tokenStore).userApprovalHandler(userApprovalHandler)
 				.authenticationManager(authenticationManager);
