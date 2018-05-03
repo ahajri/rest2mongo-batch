@@ -31,3 +31,6 @@ hs_err_pid*
 
 #eclipse project conf file
 /.project
+
+#target
+**/target
