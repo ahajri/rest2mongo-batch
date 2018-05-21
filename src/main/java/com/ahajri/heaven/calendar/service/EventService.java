@@ -19,7 +19,7 @@ public interface EventService {
 
 	public List<EventCollection> findByDateBetween(Date fromDate, Date toDate) throws TechnicalException;
 
-	public EventCollection save(EventCollection event) throws TechnicalException;
+	public List<EventCollection> save(EventCollection event) throws TechnicalException;
 
 	public EventCollection findById(String id) throws TechnicalException;
 

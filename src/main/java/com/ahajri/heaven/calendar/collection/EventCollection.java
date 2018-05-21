@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.ahajri.heaven.calendar.beans.Riwaya;
+import com.ahajri.heaven.calendar.utils.HCDateUtils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = false)
@@ -20,6 +21,10 @@ public class EventCollection implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 2228859318316143931L;
+	
+	public  EventCollection() {
+		
+	}
 
 	@Id
 	private String idEvent;
@@ -76,7 +81,12 @@ public class EventCollection implements Serializable {
 	}
 
 	public void setEndDateTime(Date endDateTime) {
-		this.endDateTime = endDateTime;
+		if (endDateTime!=null) {
+			this.endDateTime = endDateTime;
+		}else{
+			this.endDateTime = HCDateUtils.getMaxDate();
+		}
+		
 	}
 
 	public boolean isAllDay() {

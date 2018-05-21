@@ -50,10 +50,10 @@ public class ThirdPartyRestTest {
 		
 		
 
-		// Given
+		// Given: Lille town
 		Map<String, Object> params = new HashMap<>();
-		params.put(KeyConstants.LATITUDE, 36.7201600);
-		params.put(KeyConstants.LONGITUDE, -4.4203400);
+		params.put(KeyConstants.LATITUDE, 50.6333);
+		params.put(KeyConstants.LONGITUDE, 3.0667);
 		params.put(KeyConstants.DATE, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		DateFormat datetimeFormat = new SimpleDateFormat(TimeConstants.AM_PM_TIME_PATTERN);
 		HttpUriRequest request = new HttpGet(UrlUtils.buildParamUrl(UrlConstants.SUNRISE_SUNSET_URL, params));

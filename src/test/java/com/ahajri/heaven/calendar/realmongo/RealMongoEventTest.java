@@ -1,14 +1,15 @@
 package com.ahajri.heaven.calendar.realmongo;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -18,13 +19,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonFactoryBean;
+import org.springframework.security.oauth2.config.annotation.builders.ClientDetailsServiceBuilder.ClientBuilder;
 import org.springframework.test.annotation.ProfileValueSourceConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 
 import com.ahajri.heaven.calendar.collection.EventCollection;
 import com.ahajri.heaven.calendar.constants.enums.RecurringEnum;
@@ -34,23 +38,25 @@ import com.google.gson.GsonBuilder;
 import com.mongodb.util.JSON;
 
 @ProfileValueSourceConfiguration(value = SystemProfileValueSource2.class)
-//@IfProfileValue(name = ACTIVE_PROFILES_PROPERTY_NAME, value = "it")
+// @IfProfileValue(name = ACTIVE_PROFILES_PROPERTY_NAME, value = "it")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RealMongoEventTest {
 
 	@Autowired
-	private TestRestTemplate restTemplate;
+	private RestTemplate restTemplate;
 
 	private static EventCollection persisted;
-	
+
+	private static List<EventCollection> persisteds;
+
 	private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 	@Test
 	public void test1CreateEvent() {
 		EventCollection event = new EventCollection();
-		event.setTitle("Test Event");
+		event.setTitle("Test Event Monthly Recurring");
 		event.setAllDay(false);
 		event.setRecurring(RecurringEnum.MONTHLY.toString());
 		Calendar c = Calendar.getInstance();
@@ -66,14 +72,12 @@ public class RealMongoEventTest {
 		c.set(Calendar.DAY_OF_MONTH, 31);
 		event.setEndDateTime(c.getTime());
 		System.out.println(gson.toJson(event));
-		ResponseEntity<EventCollection> responseEntity = restTemplate.postForEntity("/events/create", event, EventCollection.class);
-		persisted = responseEntity.getBody();
-		System.out.println(persisted.toString());
-		assertNotNull("Should have an PK", persisted.getIdEvent());
+		
+		
+		
+		persisteds = Arrays.asList(restTemplate.postForObject("http://localhost:5050/events/create", event, EventCollection[].class));
+		System.out.println(persisteds.size());
+		assertNotEquals(0, persisteds.size());
 	}
-
-	
-
-	
 
 }

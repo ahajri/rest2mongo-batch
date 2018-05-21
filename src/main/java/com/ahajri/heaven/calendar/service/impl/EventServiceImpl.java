@@ -5,8 +5,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -14,9 +16,11 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.ahajri.heaven.calendar.collection.EventCollection;
+import com.ahajri.heaven.calendar.constants.enums.RecurringEnum;
 import com.ahajri.heaven.calendar.queries.QueryParam;
 import com.ahajri.heaven.calendar.security.exception.TechnicalException;
 import com.ahajri.heaven.calendar.service.EventService;
+import com.ahajri.heaven.calendar.utils.HCDateUtils;
 
 @Service(value = "eventService")
 public class EventServiceImpl implements EventService {
@@ -36,9 +40,67 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public EventCollection save(EventCollection event) throws TechnicalException {
-		mongoTemplate.save(event);
-		return findById(event.getIdEvent());
+	public List<EventCollection> save(EventCollection event) throws TechnicalException {
+		final String recurring = event.getRecurring();
+		Date endDate = event.getEndDateTime();
+		Date startDate = event.getStartDateTime();
+		Date stepDate = startDate;
+		List<EventCollection> events = new ArrayList<>();
+		if (RecurringEnum.ONETIME.getKey().equalsIgnoreCase(recurring) || StringUtils.isEmpty(recurring)) {
+			mongoTemplate.save(event);
+			return Arrays.asList(event);
+		} else {
+			switch (recurring) {
+			case "DAILY": {
+				while (stepDate.before(endDate)) {
+					EventCollection nextEvent = event;
+					nextEvent.setStartDateTime(HCDateUtils.incrementDateByDays(startDate, 1));
+					stepDate = HCDateUtils.incrementDateByDays(stepDate, 1);
+					events.add(nextEvent);
+				}
+
+			}
+				break;
+			case "HOURLY":
+				while (stepDate.before(endDate)) {
+					EventCollection nextEvent = event;
+					nextEvent.setStartDateTime(HCDateUtils.incrementDateByHours(startDate, 1));
+					stepDate = HCDateUtils.incrementDateByHours(stepDate, 1);
+					events.add(nextEvent);
+				}
+				break;
+			case "WEEKLY":
+				while (stepDate.before(endDate)) {
+					EventCollection nextEvent = event;
+					nextEvent.setStartDateTime(HCDateUtils.incrementDateByWeeks(startDate, 1));
+					stepDate = HCDateUtils.incrementDateByWeeks(stepDate, 1);
+					events.add(nextEvent);
+				}
+				break;
+			case "MONTHLY":
+				while (stepDate.before(endDate)) {
+					EventCollection nextEvent = event;
+					nextEvent.setStartDateTime(HCDateUtils.incrementDateByMonths(startDate, 1));
+					stepDate = HCDateUtils.incrementDateByMonths(stepDate, 1);
+					events.add(nextEvent);
+				}
+				break;
+			case "YEARLY":
+				while (stepDate.before(endDate)) {
+					EventCollection nextEvent = event;
+					nextEvent.setStartDateTime(HCDateUtils.incrementDateByYears(startDate, 1));
+					stepDate = HCDateUtils.incrementDateByYears(stepDate, 1);
+					events.add(nextEvent);
+				}
+				break;
+
+			default:
+				break;
+			}
+			mongoTemplate.insert(events,EventCollection.class);
+			return events;
+		}
+
 	}
 
 	@Override

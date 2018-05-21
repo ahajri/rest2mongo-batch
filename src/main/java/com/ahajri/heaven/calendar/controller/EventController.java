@@ -51,11 +51,10 @@ public class EventController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public ResponseEntity<EventCollection> create(@RequestBody EventCollection event) throws RestException {
+	public ResponseEntity<List<EventCollection>> create(@RequestBody EventCollection event) throws RestException {
 		try {
-			System.out.println("########");
-			EventCollection persisted = eventService.save(event);
-			return new ResponseEntity<EventCollection>(persisted, HttpStatus.CREATED);
+			List<EventCollection> persisteds = eventService.save(event);
+			return new ResponseEntity<List<EventCollection>>(persisteds, HttpStatus.CREATED);
 		} catch (TechnicalException e) {
 			throw new RestException(e.getMessage(), e, HttpStatus.INTERNAL_SERVER_ERROR,
 					StringUtils.newStringUtf8("".getBytes()));
