@@ -19,7 +19,13 @@ public class RestException extends Throwable {
 	private String code;
 
 	public RestException(String message, Exception ex, HttpStatus httpStatus, String code) {
-		super(message);
+		super(message,ex);
+		this.httpStatus = httpStatus;
+		this.code = code;
+	}
+
+	public RestException(String message, Throwable ex, HttpStatus httpStatus, String code) {
+		super(message,ex);
 		this.httpStatus = httpStatus;
 		this.code = code;
 	}

@@ -1,6 +1,6 @@
 package com.ahajri.heaven.calendar.security.exception;
 
-public class TechnicalException extends Exception {
+public class TechnicalException extends Throwable {
 
 	/**
 	 * 
@@ -11,5 +11,7 @@ public class TechnicalException extends Exception {
 	public TechnicalException(Throwable cause){
 		super(cause);
 	}
-
+	public TechnicalException(String msg, Throwable cause){
+		super(msg,cause);
+	}
 }

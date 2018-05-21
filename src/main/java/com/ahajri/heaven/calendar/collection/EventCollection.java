@@ -1,17 +1,18 @@
 package com.ahajri.heaven.calendar.collection;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.ahajri.heaven.calendar.beans.Riwaya;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = false)
 @Document(collection = "EventCollection")
 public class EventCollection implements Serializable {
 
@@ -21,7 +22,7 @@ public class EventCollection implements Serializable {
 	private static final long serialVersionUID = 2228859318316143931L;
 
 	@Id
-	private String id;
+	private String idEvent;
 
 	@Indexed(unique = false, direction = IndexDirection.ASCENDING)
 	private String title;
@@ -33,13 +34,17 @@ public class EventCollection implements Serializable {
 	private Date endDateTime;
 
 	private boolean isAllDay = false;
+	
+	private String description;
+	
+	private List<Riwaya> riwayats;
 
-	public String getId() {
-		return id;
+	public String getIdEvent() {
+		return idEvent;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setIdEvent(String idEvent) {
+		this.idEvent = idEvent;
 	}
 
 	public String getTitle() {
@@ -80,6 +85,29 @@ public class EventCollection implements Serializable {
 
 	public void setAllDay(boolean isAllDay) {
 		this.isAllDay = isAllDay;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public List<Riwaya> getRiwayats() {
+		return riwayats;
+	}
+	
+	public void setRiwayats(List<Riwaya> riwayats) {
+		this.riwayats = riwayats;
+	}
+
+	@Override
+	public String toString() {
+		
+		return "EventCollection [idEvent=" + idEvent + ", title=" + title + ", recurring=" + recurring
+				+ ", startDateTime=" + startDateTime + ", endDateTime=" + endDateTime + ", isAllDay=" + isAllDay + "]";
 	}
 
 }

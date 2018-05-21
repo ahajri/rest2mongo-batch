@@ -1,8 +1,5 @@
 package com.ahajri.heaven.calendar.controller;
 
-import java.rmi.UnexpectedException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ahajri.heaven.calendar.collection.EventCollection;
-import com.ahajri.heaven.calendar.collection.UserAuth;
 import com.ahajri.heaven.calendar.security.exception.FunctionalException;
 import com.ahajri.heaven.calendar.security.exception.RestException;
 import com.ahajri.heaven.calendar.security.exception.TechnicalException;
@@ -35,7 +32,7 @@ public class EventController {
 	private EventService eventService;
 
 	@RequestMapping(value = "/byDates", method = RequestMethod.GET)
-	public ResponseEntity<List<EventCollection>> findByDateBetween(
+	public ResponseEntity<List<EventCollection>> findByDateBetween (
 			@NotNull @RequestParam(value = "fromDate") @DateTimeFormat(pattern = REQUEST_PARAM_DATE_FORMAT) Date fromDate,
 			@RequestParam(value = "toDate") @DateTimeFormat(pattern = REQUEST_PARAM_DATE_FORMAT) Date toDate)
 			throws RestException {
@@ -48,9 +45,31 @@ public class EventController {
 			}
 			return new ResponseEntity<List<EventCollection>>(found, HttpStatus.FOUND);
 		} catch (TechnicalException e) {
-			throw new RestException(e.getMessage(), e, HttpStatus.CONFLICT, StringUtils.newStringUtf8("".getBytes()));
+			throw new RestException(e.getMessage(), e, HttpStatus.NOT_FOUND, StringUtils.newStringUtf8("".getBytes()));
 		}
 
 	}
 
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public ResponseEntity<EventCollection> create(@RequestBody EventCollection event) throws RestException {
+		try {
+			System.out.println("########");
+			EventCollection persisted = eventService.save(event);
+			return new ResponseEntity<EventCollection>(persisted, HttpStatus.CREATED);
+		} catch (TechnicalException e) {
+			throw new RestException(e.getMessage(), e, HttpStatus.INTERNAL_SERVER_ERROR,
+					StringUtils.newStringUtf8("".getBytes()));
+		}
+
+	}
+	
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	public ResponseEntity<List<EventCollection>> findAll() throws RestException{
+		try {
+			return new ResponseEntity<List<EventCollection>>(eventService.findAll(), HttpStatus.FOUND);
+		} catch (TechnicalException e) {
+			throw new RestException(e.getMessage(), e, HttpStatus.INTERNAL_SERVER_ERROR,
+					StringUtils.newStringUtf8("".getBytes()));
+		}
+	}
 }
