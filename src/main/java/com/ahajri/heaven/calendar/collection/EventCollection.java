@@ -112,6 +112,8 @@ public class EventCollection implements Serializable {
 	public void setRiwayats(List<Riwaya> riwayats) {
 		this.riwayats = riwayats;
 	}
+	
+	
 
 	@Override
 	public String toString() {

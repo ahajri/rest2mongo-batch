@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.plaf.synth.SynthSeparatorUI;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -46,6 +47,8 @@ public class EventServiceImpl implements EventService {
 		Date startDate = event.getStartDateTime();
 		Date stepDate = startDate;
 		List<EventCollection> events = new ArrayList<>();
+		
+		
 		if (RecurringEnum.ONETIME.getKey().equalsIgnoreCase(recurring) || StringUtils.isEmpty(recurring)) {
 			mongoTemplate.save(event);
 			return Arrays.asList(event);
@@ -53,9 +56,13 @@ public class EventServiceImpl implements EventService {
 			switch (recurring) {
 			case "DAILY": {
 				while (stepDate.before(endDate)) {
-					EventCollection nextEvent = event;
+					EventCollection nextEvent = SerializationUtils.clone(event);
 					nextEvent.setStartDateTime(HCDateUtils.incrementDateByDays(startDate, 1));
 					stepDate = HCDateUtils.incrementDateByDays(stepDate, 1);
+					nextEvent.setStartDateTime(stepDate);
+					if (stepDate.after(endDate)) {
+						continue;
+					}
 					events.add(nextEvent);
 				}
 
@@ -63,34 +70,50 @@ public class EventServiceImpl implements EventService {
 				break;
 			case "HOURLY":
 				while (stepDate.before(endDate)) {
-					EventCollection nextEvent = event;
+					EventCollection nextEvent = SerializationUtils.clone(event);
 					nextEvent.setStartDateTime(HCDateUtils.incrementDateByHours(startDate, 1));
 					stepDate = HCDateUtils.incrementDateByHours(stepDate, 1);
+					nextEvent.setStartDateTime(stepDate);
+					if (stepDate.after(endDate)) {
+						continue;
+					}
 					events.add(nextEvent);
 				}
 				break;
 			case "WEEKLY":
 				while (stepDate.before(endDate)) {
-					EventCollection nextEvent = event;
+					EventCollection nextEvent =  event;
 					nextEvent.setStartDateTime(HCDateUtils.incrementDateByWeeks(startDate, 1));
 					stepDate = HCDateUtils.incrementDateByWeeks(stepDate, 1);
+					nextEvent.setStartDateTime(stepDate);
+					if (stepDate.after(endDate)) {
+						continue;
+					}
 					events.add(nextEvent);
 				}
 				break;
 			case "MONTHLY":
 				while (stepDate.before(endDate)) {
-					EventCollection nextEvent = event;
+					EventCollection nextEvent = SerializationUtils.clone(event);
 					nextEvent.setStartDateTime(HCDateUtils.incrementDateByMonths(startDate, 1));
 					stepDate = HCDateUtils.incrementDateByMonths(stepDate, 1);
+					nextEvent.setStartDateTime(stepDate);
+					if (stepDate.after(endDate)) {
+						continue;
+					}
 					events.add(nextEvent);
 				}
 				break;
 			case "YEARLY":
 				while (stepDate.before(endDate)) {
-					EventCollection nextEvent = event;
+					EventCollection nextEvent = SerializationUtils.clone(event);
 					nextEvent.setStartDateTime(HCDateUtils.incrementDateByYears(startDate, 1));
 					stepDate = HCDateUtils.incrementDateByYears(stepDate, 1);
-					events.add(nextEvent);
+					nextEvent.setStartDateTime(stepDate);
+					if (stepDate.before(endDate)) {
+						events.add(nextEvent);
+					}
+					
 				}
 				break;
 

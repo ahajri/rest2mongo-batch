@@ -71,12 +71,10 @@ public class RealMongoEventTest {
 		c.set(Calendar.MONTH, 11);
 		c.set(Calendar.DAY_OF_MONTH, 31);
 		event.setEndDateTime(c.getTime());
-		System.out.println(gson.toJson(event));
 		
 		
 		
 		persisteds = Arrays.asList(restTemplate.postForObject("http://localhost:5050/events/create", event, EventCollection[].class));
-		System.out.println(persisteds.size());
 		assertNotEquals(0, persisteds.size());
 	}
 
