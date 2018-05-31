@@ -59,7 +59,6 @@ public class EventController {
 			throw new RestException(e.getMessage(), e, HttpStatus.INTERNAL_SERVER_ERROR,
 					StringUtils.newStringUtf8("".getBytes()));
 		}
-
 	}
 	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)

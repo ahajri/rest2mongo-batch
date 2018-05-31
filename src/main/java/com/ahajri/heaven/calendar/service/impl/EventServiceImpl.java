@@ -22,6 +22,7 @@ import com.ahajri.heaven.calendar.queries.QueryParam;
 import com.ahajri.heaven.calendar.security.exception.TechnicalException;
 import com.ahajri.heaven.calendar.service.EventService;
 import com.ahajri.heaven.calendar.utils.HCDateUtils;
+import com.mongodb.WriteResult;
 
 @Service(value = "eventService")
 public class EventServiceImpl implements EventService {
@@ -189,6 +190,72 @@ public class EventServiceImpl implements EventService {
 		} catch (Exception e) {
 			throw new TechnicalException(e);
 		}
+	}
+
+	@Override
+	public void delete(EventCollection event) throws TechnicalException {
+		try {
+			 mongoTemplate.remove(event);
+			
+		} catch (Exception e) {
+			throw new TechnicalException(e);
+		}
+		
+	}
+
+	@Override
+	public void deleteByCriteria(QueryParam... qp) throws TechnicalException {
+		final Query q = new Query();
+		final List<Criteria> criterias = new ArrayList<>();
+		Arrays.asList(qp).stream().forEach(p -> {
+			String operator = p.getOperator().toString();
+			String fieldName = p.getFieldName();
+			Object value = p.getValue();
+			switch (operator) {
+			case "EQ":
+				Criteria cEq = Criteria.where(fieldName).is(value);
+				criterias.add(cEq);
+				break;
+			case "NE":
+				Criteria cNe = Criteria.where(fieldName).ne(value);
+				criterias.add(cNe);
+				break;
+			case "GT":
+				Criteria cGt = Criteria.where(fieldName).gt(value);
+				criterias.add(cGt);
+				break;
+			case "GTE":
+				Criteria cGte = Criteria.where(fieldName).gte(value);
+				criterias.add(cGte);
+				break;
+			case "LT":
+				Criteria cLt = Criteria.where(fieldName).lt(value);
+				criterias.add(cLt);
+				break;
+			case "LTE":
+				Criteria cLte = Criteria.where(fieldName).lte(value);
+				criterias.add(cLte);
+				break;
+			case "IN":
+				Criteria cIn = Criteria.where(fieldName).in(value);
+				criterias.add(cIn);
+				break;
+			case "NIN":
+				Criteria cNin = Criteria.where(fieldName).nin(value);
+				criterias.add(cNin);
+				break;
+			default:
+				break;
+			}
+
+		});
+		q.addCriteria(new Criteria().andOperator((Criteria[]) criterias.toArray()));
+		try {
+			mongoTemplate.remove(q, EventCollection.class);
+		} catch (Exception e) {
+			throw new TechnicalException(e);
+		}
+		
 	}
 
 }
