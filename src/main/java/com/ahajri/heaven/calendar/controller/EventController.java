@@ -23,7 +23,7 @@ import com.ahajri.heaven.calendar.security.exception.TechnicalException;
 import com.ahajri.heaven.calendar.service.EventService;
 
 @RestController
-@RequestMapping("/events")
+@RequestMapping("/api/v1/hcalendar/events")
 public class EventController {
 
 	private static final String REQUEST_PARAM_DATE_FORMAT = "yyyyMMddHHmmss";
@@ -31,6 +31,13 @@ public class EventController {
 	@Autowired
 	private EventService eventService;
 
+	/**
+	 * 
+	 * @param fromDate
+	 * @param toDate
+	 * @return
+	 * @throws RestException
+	 */
 	@RequestMapping(value = "/byDates", method = RequestMethod.GET)
 	public ResponseEntity<List<EventCollection>> findByDateBetween (
 			@NotNull @RequestParam(value = "fromDate") @DateTimeFormat(pattern = REQUEST_PARAM_DATE_FORMAT) Date fromDate,

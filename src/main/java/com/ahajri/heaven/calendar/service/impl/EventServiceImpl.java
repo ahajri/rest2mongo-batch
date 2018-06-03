@@ -137,6 +137,7 @@ public class EventServiceImpl implements EventService {
 		final Query q = new Query();
 
 		final List<Criteria> criterias = new ArrayList<>();
+		
 		Arrays.asList(qp).stream().forEach(p -> {
 			String operator = p.getOperator().toString();
 			String fieldName = p.getFieldName();

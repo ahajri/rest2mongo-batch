@@ -23,11 +23,13 @@ public interface EventService {
 
 	public EventCollection findById(String id) throws TechnicalException;
 
-	public List<EventCollection> findByCriteria(QueryParam... qp) throws TechnicalException;
+	
 
 	public List<EventCollection> findAll() throws TechnicalException;
 	
 	public void delete(EventCollection event) throws TechnicalException;
 	
 	public void deleteByCriteria(QueryParam... qp) throws TechnicalException;
+	
+	public List<EventCollection> findByCriteria(QueryParam... qp) throws TechnicalException;
 }
