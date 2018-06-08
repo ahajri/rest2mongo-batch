@@ -3,11 +3,14 @@ package com.ahajri.heaven.calendar.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
@@ -26,25 +29,29 @@ public class BookServiceImpl implements BookService {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
+	private static final Logger logger = Logger.getLogger(BookServiceImpl.class);
+
 	@Override
 	public BookCollection create(BookCollection toPersist) throws TechnicalException, FunctionalException {
 		try {
-			mongoTemplate.save(toPersist, BookCollection.class.getSimpleName());
-			DBObject userDBObject = (DBObject) mongoTemplate.getConverter().convertToMongoType(toPersist);
-			BasicQuery query = new BasicQuery("{ 'name' : '" + toPersist.getName() + "' }");
-			return mongoTemplate.find(query, BookCollection.class).get(0);
+			mongoTemplate.insert(toPersist, BookCollection.class.getSimpleName());
+			Query q = new Query();
+			q.addCriteria(Criteria.byExample(toPersist));
+			return mongoTemplate.findOne(q, BookCollection.class);
 		} catch (Exception e) {
 			throw new TechnicalException(e);
 		}
 	}
 
 	@Override
-	public BookCollection update(BookCollection book) throws TechnicalException, FunctionalException {
-		DBObject userDBObject = (DBObject) mongoTemplate.getConverter().convertToMongoType(book);
-		BasicQuery query = new BasicQuery("{ 'bookId' : '" + book.getBookId() + "' }");
-		Update setUpdate = Update.fromDBObject(new BasicDBObject("$set", userDBObject));
-		mongoTemplate.updateFirst(query, setUpdate, BookCollection.class);
-		return book;
+	public void update(BookCollection book) throws TechnicalException, FunctionalException {
+		Query q = new Query();
+		q.addCriteria(Criteria.where("bookId").is(book.getBookId()));
+		Update update = new Update();
+		update.set("name", book.getName());
+		update.set("author", book.getAuthor());
+		update.set("description", book.getDescription());
+		mongoTemplate.updateFirst(q, update, BookCollection.class);
 	}
 
 	@Override

@@ -10,7 +10,7 @@ public interface IService<T> {
 	
 	public T create(T toPersist) throws TechnicalException, FunctionalException;
 
-	public T update(T collection) throws TechnicalException, FunctionalException;
+	public void update(T collection) throws TechnicalException, FunctionalException;
 
 	public T findById(String bookId) throws TechnicalException, FunctionalException;
 

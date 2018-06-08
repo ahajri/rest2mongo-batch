@@ -41,10 +41,10 @@ public class BookController extends AController<BookCollection> {
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@Override
-	public ResponseEntity<BookCollection> update(@RequestBody BookCollection book) throws RestException {
+	public ResponseEntity<Void> update(@RequestBody BookCollection book) throws RestException {
 		try {
-			BookCollection persisted = bookService.update(book);
-			return new ResponseEntity<BookCollection>(persisted, HttpStatus.CREATED);
+			 bookService.update(book);
+			return new ResponseEntity<Void>( HttpStatus.OK);
 		} catch (FunctionalException | TechnicalException e) {
 			throw new RestException(e.getMessage(), e, HttpStatus.INTERNAL_SERVER_ERROR,
 					StringUtils.newStringUtf8("".getBytes()));

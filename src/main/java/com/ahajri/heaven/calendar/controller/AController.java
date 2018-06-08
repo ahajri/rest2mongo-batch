@@ -21,7 +21,7 @@ public abstract class AController<T> {
 
 	public abstract ResponseEntity<T> create(@RequestBody T collection) throws RestException;
 
-	public abstract ResponseEntity<T> update(@RequestBody T collection) throws RestException;
+	public abstract ResponseEntity<Void> update(@RequestBody T collection) throws RestException;
 
 	public abstract ResponseEntity<Void> remove(@RequestBody T collection) throws RestException;
 

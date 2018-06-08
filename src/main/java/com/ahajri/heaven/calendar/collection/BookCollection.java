@@ -7,18 +7,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown=false)
-@Document
+@JsonIgnoreProperties(ignoreUnknown = false)
+@Document(collection="BookCollection")
 public class BookCollection {
-	
+
 	@Id
 	private String bookId;
-	
+
 	@Indexed(unique = true, direction = IndexDirection.ASCENDING)
 	private String name;
-	
+
 	private String description;
-	
+
 	private String author;
 
 	public String getBookId() {
@@ -52,9 +52,11 @@ public class BookCollection {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "BookCollection [bookId=" + bookId + ", name=" + name + ", description=" + description + ", author="
+				+ author + "]";
+	}
 
 }

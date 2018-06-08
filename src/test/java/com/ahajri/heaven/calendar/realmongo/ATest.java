@@ -15,21 +15,21 @@ import com.ahajri.heaven.calendar.mongo.config.SystemProfileValueSource2;
 @ProfileValueSourceConfiguration(value = SystemProfileValueSource2.class)
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 public abstract class ATest {
 	
 	@Autowired
 	protected TestRestTemplate restTemplate;
 
-	public abstract void testACreateTest();
+	public abstract void testACreate();
 
-	public abstract void testBUpdateTest();
+	public abstract void testBUpdate();
 	
-	public abstract void testCFindAllTest();
+	public abstract void testCFindAll();
 	
-	public abstract void testDFindByCriteriaTest();
+	public abstract void testDFindByCriteria();
 
-	public abstract void testEDeleteByCriteriaTest();
+	public abstract void testEDeleteByCriteria();
 
 
 	
