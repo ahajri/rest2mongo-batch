@@ -18,10 +18,10 @@ public interface IService<T> {
 	
 	public void removeAll(List<T> collections) throws TechnicalException, FunctionalException;
 
-	public List<T> findByCriteria(QueryParam... qp) throws TechnicalException;
+	public List<T> findByCriteria(List<QueryParam> paramList) throws TechnicalException;
 
 	public List<T> findAll() throws TechnicalException, FunctionalException;
 
-	public void deleteByCriteria(QueryParam... qp) throws TechnicalException, FunctionalException;
+	public long deleteByCriteria(List<QueryParam> qp) throws TechnicalException, FunctionalException;
 
 }

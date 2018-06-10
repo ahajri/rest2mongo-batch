@@ -1,8 +1,15 @@
 package com.ahajri.heaven.calendar.queries;
 
+import java.io.Serializable;
+
 import com.ahajri.heaven.calendar.constants.enums.OperatorEnum;
 
-public class QueryParam {
+public class QueryParam implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5614459467651122237L;
 
 	private String fieldName;
 	

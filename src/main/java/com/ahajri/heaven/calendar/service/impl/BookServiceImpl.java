@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import com.ahajri.heaven.calendar.security.exception.TechnicalException;
 import com.ahajri.heaven.calendar.service.BookService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.WriteResult;
 
 @Service("bookService")
 public class BookServiceImpl implements BookService {
@@ -66,12 +68,13 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<BookCollection> findByCriteria(QueryParam... qp) throws TechnicalException {
+	public List<BookCollection> findByCriteria(List<QueryParam> qp) throws TechnicalException {
+		
 		final Query q = new Query();
 
 		final List<Criteria> criterias = new ArrayList<>();
 
-		Arrays.asList(qp).stream().forEach(p -> {
+		qp.stream().forEach(p -> {
 			String operator = p.getOperator().toString();
 			String fieldName = p.getFieldName();
 			Object value = p.getValue();
@@ -111,9 +114,15 @@ public class BookServiceImpl implements BookService {
 			default:
 				break;
 			}
-
 		});
-		q.addCriteria(new Criteria().andOperator((Criteria[]) criterias.toArray()));
+
+		Criteria[] andOperators = new Criteria[criterias.size()];
+		AtomicInteger index = new AtomicInteger(0);
+		criterias.stream().forEach(cr -> {
+			andOperators[index.getAndIncrement()] = cr;
+		});
+
+		q.addCriteria(new Criteria().andOperator(andOperators));
 		return mongoTemplate.find(q, BookCollection.class);
 	}
 
@@ -123,11 +132,10 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void deleteByCriteria(QueryParam... qp) throws TechnicalException, FunctionalException {
-
+	public long deleteByCriteria(List<QueryParam> qp) throws TechnicalException, FunctionalException {
 		final Query q = new Query();
 		final List<Criteria> criterias = new ArrayList<>();
-		Arrays.asList(qp).stream().forEach(p -> {
+		qp.stream().forEach(p -> {
 			String operator = p.getOperator().toString();
 			String fieldName = p.getFieldName();
 			Object value = p.getValue();
@@ -169,9 +177,16 @@ public class BookServiceImpl implements BookService {
 			}
 
 		});
-		q.addCriteria(new Criteria().andOperator((Criteria[]) criterias.toArray()));
+		Criteria[] andOperators = new Criteria[criterias.size()];
+		AtomicInteger index = new AtomicInteger(0);
+		criterias.stream().forEach(cr -> {
+			andOperators[index.getAndIncrement()] = cr;
+		});
+
+		q.addCriteria(new Criteria().andOperator(andOperators));
 		try {
-			mongoTemplate.remove(q, BookCollection.class);
+		WriteResult wr = 	mongoTemplate.remove(q, BookCollection.class);
+		return wr.getN();
 		} catch (Exception e) {
 			throw new TechnicalException(e);
 		}

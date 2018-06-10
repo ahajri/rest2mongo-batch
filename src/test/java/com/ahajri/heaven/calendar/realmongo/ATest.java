@@ -29,7 +29,7 @@ public abstract class ATest {
 	
 	public abstract void testDFindByCriteria();
 
-	public abstract void testEDeleteByCriteria();
+	public abstract void testEDeleteAllByCriteria();
 
 
 	

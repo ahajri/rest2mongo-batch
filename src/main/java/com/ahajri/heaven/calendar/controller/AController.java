@@ -29,10 +29,10 @@ public abstract class AController<T> {
 
 	public abstract ResponseEntity<Void> removeAll() throws RestException;
 
-	public abstract ResponseEntity<Void> deleteByCriteria(QueryParam... qp) throws RestException;
+	public abstract ResponseEntity<Long> deleteByCriteria(String encryptedObjectQuery) throws RestException;
 
 	public abstract ResponseEntity<Void> removeList(List<T> collections) throws RestException;
 
-	public abstract ResponseEntity<List<T>> findByCriteria(QueryParam... qp) throws RestException;
+	public abstract ResponseEntity<List<T>> findByCriteria(String encryptedObjectQuery) throws RestException;
 
 }
