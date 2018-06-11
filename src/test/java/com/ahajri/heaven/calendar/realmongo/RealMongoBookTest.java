@@ -1,5 +1,14 @@
 package com.ahajri.heaven.calendar.realmongo;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertSame;
+
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.List;
+
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.http.HttpStatus;
@@ -9,16 +18,6 @@ import com.ahajri.heaven.calendar.collection.BookCollection;
 import com.ahajri.heaven.calendar.constants.enums.OperatorEnum;
 import com.ahajri.heaven.calendar.queries.QueryParam;
 import com.google.gson.Gson;
-
-import static org.junit.Assert.*;
-
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.List;
-
-import org.apache.commons.codec.language.bm.Lang;
-import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RealMongoBookTest extends ATest {

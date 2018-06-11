@@ -39,6 +39,7 @@ public class BookServiceImpl implements BookService {
 			mongoTemplate.insert(toPersist, BookCollection.class.getSimpleName());
 			Query q = new Query();
 			q.addCriteria(Criteria.byExample(toPersist));
+			logger.debug("Book: "+toPersist.toString()+" created ...");
 			return mongoTemplate.findOne(q, BookCollection.class);
 		} catch (Exception e) {
 			throw new TechnicalException(e);

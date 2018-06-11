@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ahajri.heaven.calendar.queries.QueryParam;
 import com.ahajri.heaven.calendar.security.exception.RestException;
+import com.google.gson.Gson;
 
 /**
  * Abstract Controllers class
@@ -16,6 +17,8 @@ import com.ahajri.heaven.calendar.security.exception.RestException;
  * @param <T>
  */
 public abstract class AController<T> {
+	
+	protected final Gson gson = new Gson();
 
 	protected static final String REQUEST_PARAM_DATE_FORMAT = "yyyyMMddHHmmss";
 

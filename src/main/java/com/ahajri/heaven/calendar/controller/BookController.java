@@ -34,8 +34,6 @@ public class BookController extends AController<BookCollection> {
 	@Autowired
 	private BookService bookService;
 
-	private final Gson gson = new Gson();
-
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	@Override
 	public ResponseEntity<BookCollection> create(@RequestBody BookCollection book) throws RestException {
@@ -107,7 +105,7 @@ public class BookController extends AController<BookCollection> {
 			}.getType();
 			List<QueryParam> paramList = gson.fromJson(json, listType);
 			long nbrDeleted = bookService.deleteByCriteria(paramList);
-			return new ResponseEntity<Long>(nbrDeleted,HttpStatus.OK);
+			return new ResponseEntity<Long>(nbrDeleted, HttpStatus.OK);
 		} catch (FunctionalException | TechnicalException e) {
 			throw new RestException(e.getMessage(), e, HttpStatus.INTERNAL_SERVER_ERROR,
 					StringUtils.newStringUtf8("".getBytes()));

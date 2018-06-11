@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.SerializationUtils;
@@ -22,7 +21,6 @@ import com.ahajri.heaven.calendar.queries.QueryParam;
 import com.ahajri.heaven.calendar.security.exception.TechnicalException;
 import com.ahajri.heaven.calendar.service.EventService;
 import com.ahajri.heaven.calendar.utils.HCDateUtils;
-import com.mongodb.WriteResult;
 
 @Service(value = "eventService")
 public class EventServiceImpl implements EventService {

@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.ahajri.heaven.calendar.beans.Riwaya;
 import com.ahajri.heaven.calendar.utils.HCDateUtils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -42,7 +41,7 @@ public class EventCollection implements Serializable {
 	
 	private String description;
 	
-	private List<Riwaya> riwayats;
+	private List<RiwayaCollection> riwayats;
 
 	public String getIdEvent() {
 		return idEvent;
@@ -105,11 +104,11 @@ public class EventCollection implements Serializable {
 		this.description = description;
 	}
 	
-	public List<Riwaya> getRiwayats() {
+	public List<RiwayaCollection> getRiwayats() {
 		return riwayats;
 	}
 	
-	public void setRiwayats(List<Riwaya> riwayats) {
+	public void setRiwayats(List<RiwayaCollection> riwayats) {
 		this.riwayats = riwayats;
 	}
 	
