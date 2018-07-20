@@ -3,7 +3,8 @@ package com.ahajri.heaven.calendar.service;
 import java.util.Date;
 import java.util.Map;
 
-import com.ahajri.heaven.calendar.security.exception.TechnicalException;
+import com.ahajri.heaven.calendar.exception.BusinessException;
+
 
 public interface PrayTimeService {
 
@@ -22,6 +23,6 @@ public interface PrayTimeService {
 	 * 
 	 * @throws TechnicalException
 	 */
-	Map<String, Object> getPrayTimeByLatLngDate(double d, double e, Date date) throws TechnicalException;
+	Map<String, Object> getPrayTimeByLatLngDate(double d, double e, Date date) throws BusinessException;
 
 }

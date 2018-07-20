@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 
 import com.ahajri.heaven.calendar.collection.EventCollection;
 import com.ahajri.heaven.calendar.constants.enums.RecurringEnum;
+import com.ahajri.heaven.calendar.exception.BusinessException;
 import com.ahajri.heaven.calendar.queries.QueryParam;
-import com.ahajri.heaven.calendar.security.exception.TechnicalException;
 import com.ahajri.heaven.calendar.service.EventService;
 import com.ahajri.heaven.calendar.utils.HCDateUtils;
 
@@ -30,9 +30,9 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public List<EventCollection> findByDateBetween(@NotNull Date fromDate, @NotNull Date toDate)
-			throws TechnicalException {
+			throws BusinessException {
 		if (toDate.before(fromDate)) {
-			throw new TechnicalException(new IllegalArgumentException("Please check the dates"));
+			throw new BusinessException(new IllegalArgumentException("Please check the dates"));
 		}
 		Query q = new Query()
 				.addCriteria(Criteria.where("startDateTime").gte(fromDate).and("endDateTime").lte(fromDate));
@@ -40,7 +40,7 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public List<EventCollection> save(EventCollection event) throws TechnicalException {
+	public List<EventCollection> save(EventCollection event) throws BusinessException {
 		final String recurring = event.getRecurring();
 		Date endDate = event.getEndDateTime();
 		Date startDate = event.getStartDateTime();
@@ -126,12 +126,12 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public EventCollection findById(String id) throws TechnicalException {
+	public EventCollection findById(String id) throws BusinessException {
 		return mongoTemplate.findById(id, EventCollection.class);
 	}
 
 	@Override
-	public List<EventCollection> findByCriteria(QueryParam... qp) throws TechnicalException {
+	public List<EventCollection> findByCriteria(QueryParam... qp) throws BusinessException {
 		final Query q = new Query();
 
 		final List<Criteria> criterias = new ArrayList<>();
@@ -183,27 +183,27 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public List<EventCollection> findAll() throws TechnicalException {
+	public List<EventCollection> findAll() throws BusinessException {
 		try {
 			return mongoTemplate.findAll(EventCollection.class);
 		} catch (Exception e) {
-			throw new TechnicalException(e);
+			throw new BusinessException(e);
 		}
 	}
 
 	@Override
-	public void delete(EventCollection event) throws TechnicalException {
+	public void delete(EventCollection event) throws BusinessException {
 		try {
 			 mongoTemplate.remove(event);
 			
 		} catch (Exception e) {
-			throw new TechnicalException(e);
+			throw new BusinessException(e);
 		}
 		
 	}
 
 	@Override
-	public void deleteByCriteria(QueryParam... qp) throws TechnicalException {
+	public void deleteByCriteria(QueryParam... qp) throws BusinessException {
 		final Query q = new Query();
 		final List<Criteria> criterias = new ArrayList<>();
 		Arrays.asList(qp).stream().forEach(p -> {
@@ -252,7 +252,7 @@ public class EventServiceImpl implements EventService {
 		try {
 			mongoTemplate.remove(q, EventCollection.class);
 		} catch (Exception e) {
-			throw new TechnicalException(e);
+			throw new BusinessException(e);
 		}
 		
 	}

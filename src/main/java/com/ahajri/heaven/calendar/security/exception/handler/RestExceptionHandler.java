@@ -18,8 +18,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.ahajri.heaven.calendar.security.exception.RestError;
-import com.ahajri.heaven.calendar.security.exception.RestException;
+import com.ahajri.heaven.calendar.exception.RestError;
+import com.ahajri.heaven.calendar.exception.RestException;
 import com.mongodb.DuplicateKeyException;
 
 @EnableWebMvc

@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.ahajri.heaven.calendar.exception.RestException;
 import com.ahajri.heaven.calendar.queries.QueryParam;
-import com.ahajri.heaven.calendar.security.exception.RestException;
 import com.google.gson.Gson;
 
 /**

@@ -150,14 +150,6 @@ public final class HCDateUtils {
 		return asUtilDate(nextYears, ZoneId.systemDefault());
 	}
 
-	/**
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Date sunrise = new Date(2018, 1, 7, 8, 13);
-		Date sunset = new Date(2018, 1, 7, 17, 53);
-		System.out.println(getPrayTimes(sunrise, sunset));
-	}
+	
 
 }

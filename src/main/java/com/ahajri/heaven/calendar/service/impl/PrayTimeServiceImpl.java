@@ -19,26 +19,27 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ahajri.heaven.calendar.constants.KeyConstants;
 import com.ahajri.heaven.calendar.constants.TimeConstants;
 import com.ahajri.heaven.calendar.constants.UrlConstants;
-import com.ahajri.heaven.calendar.security.exception.TechnicalException;
+import com.ahajri.heaven.calendar.exception.BusinessException;
 import com.ahajri.heaven.calendar.service.PrayTimeService;
 import com.ahajri.heaven.calendar.utils.HCDateUtils;
-import com.ahajri.heaven.calendar.utils.UrlUtils;
+import com.ahajri.heaven.calendar.utils.HttpUtils;
 /**
  * 
  * @author ahajri
  *
  */
-@Component(value="prayTimeService")
+@Service("prayTimeService")
 public class PrayTimeServiceImpl implements PrayTimeService {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public Map<String, Object> getPrayTimeByLatLngDate(final double lat, final double lng, final Date date)
-			throws TechnicalException {
+			throws BusinessException {
 
 		final Map<String, Object> result = new HashMap<>();
 		final Map<String, Object> params = new HashMap<>();
@@ -48,9 +49,9 @@ public class PrayTimeServiceImpl implements PrayTimeService {
 		final DateFormat datetimeFormat = new SimpleDateFormat(TimeConstants.AM_PM_TIME_PATTERN);
 		HttpUriRequest request;
 		try {
-			request = new HttpGet(UrlUtils.buildParamUrl(UrlConstants.SUNRISE_SUNSET_URL, params));
+			request = new HttpGet(HttpUtils.buildParamUrl(UrlConstants.SUNRISE_SUNSET_URL, params));
 			HttpResponse response = HttpClientBuilder.create().build().execute(request);
-			Map<String, Object> resource = UrlUtils.retrieveResourceFromResponse(response, Map.class);
+			Map<String, Object> resource = HttpUtils.retrieveResourceFromResponse(response, Map.class);
 			Date sunriseDate = datetimeFormat.parse((String) ((Map) resource.get("results")).get("sunrise"));
 			Date sunsetDate = datetimeFormat.parse((String) ((Map) resource.get("results")).get("sunset"));
 			Calendar c = Calendar.getInstance();
@@ -113,10 +114,8 @@ public class PrayTimeServiceImpl implements PrayTimeService {
 			result.put(KeyConstants.MidnightCharaiTime, midnightChar3iDateTime);
 			result.put(KeyConstants.NighhtLength, nightLength);
 			result.put(KeyConstants.FajrPrayTime, fajrPrayDateTime);
-		} catch (URISyntaxException | IOException e) {
-			throw new TechnicalException(e);
-		} catch (ParseException e) {
-			throw new TechnicalException(e);
+		} catch (URISyntaxException | IOException | ParseException e) {
+			throw new BusinessException(e);
 		} 
 
 		return result;
