@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
-//@EnableScheduling
+@EnableScheduling
 @SpringBootApplication
 // @EnableOAuth2Sso
 public class Application /*
