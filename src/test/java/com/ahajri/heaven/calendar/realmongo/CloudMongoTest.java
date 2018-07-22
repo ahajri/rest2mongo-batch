@@ -7,6 +7,7 @@ import java.util.Date;
 
 import org.bson.Document;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -24,6 +25,7 @@ public class CloudMongoTest {
 	private CloudApiMongoService cloudApiMongoService;
 
 	@Test
+	@Ignore
 	public void testACreate() {
 		Document event = new Document();
 		event.append("name", "Test Cloud Create Event");
