@@ -1,25 +1,18 @@
 package com.ahajri.heaven.calendar.mongo.cloud;
 
 import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ahajri.heaven.calendar.exception.BusinessException;
-import com.google.gson.Gson;
+import com.ahajri.heaven.calendar.utils.JsonUtils;
 
 @Service
 public class CloudApiMongoService {
@@ -51,18 +44,18 @@ public class CloudApiMongoService {
 	 * 
 	 * @throws BusinessException
 	 */
-	public HttpResponse insertOne(final String collectionName, final Map<String, Object> documentMap) throws BusinessException {
+	public HttpResponse insertOne(final String collectionName, final Object documentMap)
+			throws BusinessException {
 		try {
 			final String postUrl = "https://api.mlab.com/api/1/databases/" + dbName + "/collections/" + collectionName
 					+ "?apiKey=" + apiKey;
-			
+
 			final HttpClient httpclient = HttpClients.createDefault();
 			final HttpPost httppost = new HttpPost(postUrl);
 
-			
 			httppost.setHeader("content-type", "application/json");
 			BasicHttpEntity basicEntity = new BasicHttpEntity();
-			basicEntity.setContent(new ByteArrayInputStream(new Gson().toJson(documentMap).getBytes()));
+			basicEntity.setContent(new ByteArrayInputStream(JsonUtils.prettyPrint(documentMap).getBytes()));
 			httppost.setEntity(basicEntity);
 
 			return httpclient.execute(httppost);

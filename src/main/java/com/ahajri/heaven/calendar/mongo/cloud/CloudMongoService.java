@@ -71,8 +71,10 @@ public class CloudMongoService {
 	 */
 	public void insertMany(String collectionName, List<Document> documents) throws BusinessException {
 		try {
+			begin();
 			MongoCollection<Document> collection = db.getCollection(collectionName);
 			collection.insertMany(documents);
+			close();
 		} catch (Exception e) {
 			throw new BusinessException(e, "Could not insert documents");
 		}
@@ -86,8 +88,10 @@ public class CloudMongoService {
 	 */
 	public void insertOne(String collectionName, Document document) throws BusinessException {
 		try {
+			begin();
 			MongoCollection<Document> collection = db.getCollection(collectionName);
 			collection.insertOne(document);
+			close();
 		} catch (Exception e) {
 			throw new BusinessException(e, "Could not insert document");
 		}
@@ -100,8 +104,10 @@ public class CloudMongoService {
 	 */
 	public void deleteOne(String collectionName, Document document) throws BusinessException {
 		try {
+			begin();
 			MongoCollection<Document> collection = db.getCollection(collectionName);
 			collection.deleteOne(document);
+			close();
 		} catch (Exception e) {
 			throw new BusinessException(e, "Could not delete document");
 		}
