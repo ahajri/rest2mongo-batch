@@ -10,10 +10,8 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @EnableScheduling
 @SpringBootApplication
-// @EnableOAuth2Sso
-public class Application /*
-							 * extends WebSecurityConfigurerAdapter extends SpringBootServletInitializer
-							 */
+public class Application extends WebSecurityConfigurerAdapter
+
 {
 
 	public static void main(String[] args) {
@@ -26,15 +24,16 @@ public class Application /*
 		return repository;
 	}
 
-	// @Override
-	// protected void configure(HttpSecurity http) throws Exception {
-	// /*
-	// * http.antMatcher("/**").authorizeRequests().antMatchers("/**",
-	// * "/auth**", "/webjars/**").permitAll() .anyRequest().authenticated();
-	// */
-	// http.csrf().disable()
-	// .authorizeRequests().antMatchers("/").permitAll();
-	//
-	// }
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+
+		http.antMatcher("/**")
+		.authorizeRequests()
+		.antMatchers("/**", "/auth**", "/webjars/**").permitAll().anyRequest()
+				.permitAll();
+
+		http.csrf().disable().authorizeRequests().antMatchers("/").permitAll();
+
+	}
 
 }
