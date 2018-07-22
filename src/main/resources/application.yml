@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://hmidbuser:hmi141209@ds243931.mlab.com:43931/heaven_calendar
+    rest:
+      base-path: /api
