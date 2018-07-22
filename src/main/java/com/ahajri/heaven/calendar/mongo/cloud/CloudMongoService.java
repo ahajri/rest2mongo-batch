@@ -8,6 +8,7 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.ahajri.heaven.calendar.constants.enums.OperatorEnum;
 import com.ahajri.heaven.calendar.exception.BusinessException;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -95,6 +96,21 @@ public class CloudMongoService {
 		} catch (Exception e) {
 			throw new BusinessException(e, "Could not insert document");
 		}
+	}
+
+	/**
+	 * find documents
+	 * 
+	 * @param collectionName:
+	 *            Collection Name
+	 * @param opts
+	 *            query criterias
+	 * @return list of found documents
+	 * @throws BusinessException
+	 */
+	public List<Document> findMany(final String collectionName, OperatorEnum... opts) throws BusinessException {
+
+		return null;
 	}
 
 	/**

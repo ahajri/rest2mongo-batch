@@ -35,7 +35,7 @@ public class EventsController {
 	@Autowired
 	private CloudMongoService cloudMongoService;
 
-	@RequestMapping(value = "/cloud/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/create", method = RequestMethod.POST)
 	public ResponseEntity<Document> cloudCreateApi(@RequestBody Map<String, Object> eventMap) throws RestException {
 		try {
 			HttpResponse response = cloudApiMongoService.insertOne("event", eventMap);
@@ -55,7 +55,7 @@ public class EventsController {
 				}
 				return new ResponseEntity<Document>(data, httpStatus);
 			}
-			return new ResponseEntity<Document>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Document>(httpStatus);
 		} catch (BusinessException | UnsupportedOperationException | IOException e) {
 			throw new RestException(e.getMessage(), e, HttpStatus.INTERNAL_SERVER_ERROR,
 					StringUtils.newStringUtf8("".getBytes()));
@@ -67,7 +67,6 @@ public class EventsController {
 		try {
 			cloudMongoService.insertOne("event", eventMap);
 			return new ResponseEntity<Document>(HttpStatus.OK);
-
 		} catch (BusinessException e) {
 			throw new RestException(e.getMessage(), e, HttpStatus.INTERNAL_SERVER_ERROR,
 					StringUtils.newStringUtf8("".getBytes()));
