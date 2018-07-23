@@ -24,7 +24,7 @@ import com.ahajri.heaven.calendar.utils.HttpUtils;
 import com.ahajri.heaven.calendar.utils.JsonUtils;
 
 @RestController
-@RequestMapping("/hcalendar/events")
+@RequestMapping("/events")
 public class EventsController {
 
 	private static final String REQUEST_PARAM_DATE_FORMAT = "yyyyMMddHHmmss";
