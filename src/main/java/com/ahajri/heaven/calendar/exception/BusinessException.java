@@ -1,15 +1,21 @@
 package com.ahajri.heaven.calendar.exception;
 
 
-
+/**
+ * 
+ * @author ahajri
+ *
+ */
 public class BusinessException extends Throwable {
+
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2876696568345332875L;
-
-	String functionalMessage;
+	private static final long serialVersionUID = -6025711038450671746L;
+	
+	
+	private String functionalMessage;
 
     public BusinessException(Throwable cause) {
         super(cause);

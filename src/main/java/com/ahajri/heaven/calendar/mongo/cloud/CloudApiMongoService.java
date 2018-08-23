@@ -1,7 +1,6 @@
 package com.ahajri.heaven.calendar.mongo.cloud;
 
 import java.io.ByteArrayInputStream;
-import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

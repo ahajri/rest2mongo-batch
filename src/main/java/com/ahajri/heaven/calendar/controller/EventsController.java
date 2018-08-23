@@ -24,8 +24,10 @@ import com.ahajri.heaven.calendar.utils.HttpUtils;
 import com.ahajri.heaven.calendar.utils.JsonUtils;
 
 @RestController
-@RequestMapping("/events")
+@RequestMapping("/hcalendar/events")
 public class EventsController {
+
+	private static final String EVENT_COLLECTION = "event";
 
 	private static final String REQUEST_PARAM_DATE_FORMAT = "yyyyMMddHHmmss";
 
@@ -35,10 +37,10 @@ public class EventsController {
 	@Autowired
 	private CloudMongoService cloudMongoService;
 
-	@RequestMapping(value = "/api/create", method = RequestMethod.POST)
-	public ResponseEntity<Document> cloudCreateApi(@RequestBody Map<String, Object> eventMap) throws RestException {
+	@RequestMapping(value = "/cloud/create", method = RequestMethod.POST)
+	public ResponseEntity<Document> createEvent(@RequestBody Map<String, Object> eventMap) throws RestException {
 		try {
-			HttpResponse response = cloudApiMongoService.insertOne("event", eventMap);
+			HttpResponse response = cloudApiMongoService.insertOne(EVENT_COLLECTION, eventMap);
 			HttpEntity entity = response.getEntity();
 
 			int httpCode = response.getStatusLine().getStatusCode();
@@ -65,7 +67,7 @@ public class EventsController {
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public ResponseEntity<Document> cloudCreate(@RequestBody Document eventMap) throws RestException {
 		try {
-			cloudMongoService.insertOne("event", eventMap);
+			cloudMongoService.insertOne(EVENT_COLLECTION, eventMap);
 			return new ResponseEntity<Document>(HttpStatus.OK);
 		} catch (BusinessException e) {
 			throw new RestException(e.getMessage(), e, HttpStatus.INTERNAL_SERVER_ERROR,

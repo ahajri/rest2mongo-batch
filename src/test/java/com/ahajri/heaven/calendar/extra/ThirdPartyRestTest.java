@@ -3,7 +3,6 @@ package com.ahajri.heaven.calendar.extra;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,11 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;

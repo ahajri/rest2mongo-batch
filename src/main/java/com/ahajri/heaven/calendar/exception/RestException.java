@@ -11,21 +11,24 @@ import org.springframework.http.HttpStatus;
 public class RestException extends Throwable {
 
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4277888281465088142L;
-
+	* 
+	*/
+	private static final long serialVersionUID = -7925688816507015803L;
 	private HttpStatus httpStatus;
 	private String code;
 
+	public RestException(Throwable ex) {
+		super(ex);
+	}
+
 	public RestException(String message, Exception ex, HttpStatus httpStatus, String code) {
-		super(message,ex);
+		super(message, ex);
 		this.httpStatus = httpStatus;
 		this.code = code;
 	}
 
 	public RestException(String message, Throwable ex, HttpStatus httpStatus, String code) {
-		super(message,ex);
+		super(message, ex);
 		this.httpStatus = httpStatus;
 		this.code = code;
 	}

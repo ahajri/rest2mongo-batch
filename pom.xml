@@ -2,11 +2,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<!-- <parent> -->
-	<!-- <groupId>org.springframework.boot</groupId> -->
-	<!-- <artifactId>spring-boot-starter-parent</artifactId> -->
-	<!-- <version>1.5.14.RELEASE</version> -->
-	<!-- </parent> -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -23,8 +18,13 @@
 
 	<developers>
 		<developer>
+			<id>1</id>
 			<name>Anis HAJRI</name>
 			<email>anis.hajri@gmail.com</email>
+			<roles>
+				<role>Architect</role>
+				<role>Developer</role>
+			</roles>
 		</developer>
 	</developers>
 
@@ -135,7 +135,11 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.9.2</version>
 		</dependency>
-
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.3</version>
+		</dependency>
 	</dependencies>
 
 
@@ -146,22 +150,10 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-
-			<!-- <plugin> -->
-			<!-- <groupId>org.apache.maven.plugins</groupId> -->
-			<!-- <artifactId>maven-failsafe-plugin</artifactId> -->
-			<!-- <executions> -->
-			<!-- <execution> -->
-			<!-- <goals> -->
-			<!-- <goal>integration-test</goal> -->
-			<!-- <goal>verify</goal> -->
-
-			<!-- </goals> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- </plugin> -->
 		</plugins>
 	</build>
+
+
 	<repositories>
 		<repository>
 			<id>spring-snapshots</id>
@@ -181,6 +173,7 @@
 		</repository>
 	</repositories>
 
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>spring-snapshots</id>
@@ -199,17 +192,5 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-	<!-- <repositories> -->
-	<!-- <repository> -->
-	<!-- <id>spring-releases</id> -->
-	<!-- <url>https://repo.spring.io/libs-release</url> -->
-	<!-- </repository> -->
-	<!-- </repositories> -->
-	<!-- <pluginRepositories> -->
-	<!-- <pluginRepository> -->
-	<!-- <id>spring-releases</id> -->
-	<!-- <url>https://repo.spring.io/libs-release</url> -->
-	<!-- </pluginRepository> -->
-	<!-- </pluginRepositories> -->
 
 </project>
