@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ahajri.heaven.calendar.enums.ErrorMessageEnum;
 import com.ahajri.heaven.calendar.exception.BusinessException;
 import com.ahajri.heaven.calendar.exception.RestException;
-import com.ahajri.heaven.calendar.model.HUser;
 import com.ahajri.heaven.calendar.mongo.cloud.CloudApiMongoService;
 import com.ahajri.heaven.calendar.mongo.cloud.CloudMongoService;
 import com.ahajri.heaven.calendar.queries.QueryParam;
@@ -35,7 +34,7 @@ import com.ahajri.heaven.calendar.utils.JsonUtils;
 import com.google.gson.Gson;
 
 @RestController
-@RequestMapping("/hcalendar/events")
+@RequestMapping("/events")
 public class EventsController {
 
 	private static final String EVENT_COLLECTION = "event";
