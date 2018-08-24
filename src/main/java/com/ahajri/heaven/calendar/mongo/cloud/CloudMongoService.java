@@ -70,8 +70,6 @@ public class CloudMongoService {
 	 */
 	private void begin() {
 		MongoClientURI uri = new MongoClientURI(cloudMongUrl);
-		Codec<Document> defaultDocumentCodec = MongoClient.getDefaultCodecRegistry().get(Document.class);
-	
 		client = new MongoClient(uri);
 		db = client.getDatabase(uri.getDatabase());
 	}
@@ -139,28 +137,8 @@ public class CloudMongoService {
 		}
 	}
 
-	/**
-	 * find documents
-	 * 
-	 * @param collectionName:
-	 *            Collection Name
-	 * @param opts
-	 *            query criterias
-	 * @return list of found documents
-	 * @throws BusinessException
-	 */
-	public List<Document> findMany(final String collectionName, OperatorEnum... opts) throws BusinessException {
-
-		try {
-			begin();
-			MongoCollection<Document> collection = db.getCollection(collectionName);
-			
-			close();
-			return null;
-		} catch (Exception e) {
-			throw new BusinessException(e, "Could not update document");
-		}
-	}
+	
+	
 
 	/**
 	 * 
