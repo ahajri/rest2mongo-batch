@@ -216,7 +216,7 @@ public class CloudMongoService {
 			List<Document> result = new ArrayList<>();
 			Document query = new Document();
 			Arrays.asList(qp).stream().forEach(p -> {
-				String operator = p.getOperator().toString();
+				String operator = p.getOperator();
 				String fieldName = p.getFieldName();
 				Object value = p.getValue();
 				switch (operator) {

@@ -13,11 +13,11 @@ public class QueryParam implements Serializable{
 
 	private String fieldName;
 	
-	private OperatorEnum operator;
+	private String operator;
 	
 	private Object value;
 
-	public QueryParam(String fieldName, OperatorEnum operator, Object value) {
+	public QueryParam(String fieldName, String operator, Object value) {
 		super();
 		this.fieldName = fieldName;
 		this.operator = operator;
@@ -32,11 +32,11 @@ public class QueryParam implements Serializable{
 		this.fieldName = fieldName;
 	}
 
-	public OperatorEnum getOperator() {
+	public String getOperator() {
 		return operator;
 	}
 
-	public void setOperator(OperatorEnum operator) {
+	public void setOperator(String operator) {
 		this.operator = operator;
 	}
 
