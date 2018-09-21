@@ -57,11 +57,13 @@ public class LoginController {
 
 		qps[0] = new QueryParam("email", OperatorEnum.EQ.name(), loginRequest.getEmail());
 		List<HUser> foundUsers = null;
+		LOG.info("##########start##########");
 		try {
 			foundUsers = cloudMongoService.search(USER_COLLECTION_NAME, qps).stream()
 					.map(d -> gson.fromJson(gson.toJson(d), HUser.class)).collect(Collectors.toList());
 		} catch (BusinessException e) {
 			LOG.error(e.getMessage(), e);
+			e.printStackTrace();
 			throw new RestException(ErrorMessageEnum.USER_NOT_FOUND_FOR_EMAIL.getMessage(loginRequest.getEmail()), e,
 					HttpStatus.NOT_FOUND);
 		}
