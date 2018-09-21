@@ -45,6 +45,7 @@ import com.google.gson.Gson;
 public class UserController  {
 
 	private static final String USER_COLLECTION_NAME = "users";
+	
 	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 	
 	@Value("${application.key}")
@@ -53,25 +54,17 @@ public class UserController  {
 	@Value("${access.token}")
 	protected String accessToken;
 
-	protected final Properties properties = new Properties();
-
-	@PostConstruct
-	public Properties fetchProperties() {
-		try {
-			File file = ResourceUtils.getFile("classpath:application.properties");
-			InputStream in = new FileInputStream(file);
-			properties.load(in);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return properties;
-	}
-
+	
 	@Autowired
 	private CloudMongoService cloudMongoService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	private static  final Gson gson = new Gson();
+	
+
+	
 
 	/**
 	 * Create User with email and pasword and roles
@@ -82,11 +75,7 @@ public class UserController  {
 	 */
 	@PostMapping(path = "/add")
 	public ResponseEntity<HUser> createUser(@Valid @RequestBody HUser user) throws RestException {
-		if (!user.getEmail().split("@")[0].endsWith("roc")) {
-			throw new RestException(ErrorMessageEnum.EMAIL_FORMAT_ROC.getMessage(),
-					new IllegalArgumentException(ErrorMessageEnum.EMAIL_FORMAT_ROC.getMessage()),
-					HttpStatus.BAD_REQUEST, null);
-		}
+		
 		// verify if user already created
 		Document query = new Document();
 		query.append("email", user.getEmail());
@@ -106,7 +95,6 @@ public class UserController  {
 			String encodedPassword = passwordEncoder.encode(user.getPassword());
 			userDocument.append("password", encodedPassword);
 			userDocument.append("actif", user.isActif());
-			userDocument.append("trelloUsername", user.getTrelloUsername());
 			userDocument.append("token", SecurityUtils.generateRandomToken());
 			List<Document> roles = new ArrayList<>();
 			user.getRoles().stream().forEach(r -> {
@@ -117,7 +105,7 @@ public class UserController  {
 			userDocument.append("roles", roles);
 			cloudMongoService.insertOne(USER_COLLECTION_NAME, userDocument);
 
-			HUser createdUser = new Gson().fromJson(
+			HUser createdUser = gson.fromJson(
 					cloudMongoService.findByExample(USER_COLLECTION_NAME, userDocument).get(0).toJson(), HUser.class);
 			return ResponseEntity.ok(createdUser);
 		} catch (BusinessException e) {
@@ -155,7 +143,6 @@ public class UserController  {
 			found.append("email", user.getEmail());
 			found.append("password", user.getPassword());
 			found.append("token", user.getToken());
-			found.append("trelloUsername", user.getTrelloUsername());
 			found.append("roles", user.getRoles().stream().map(r -> {
 				Document role = new Document("name", r.getName());
 				role.append("description", r.getDescription());
@@ -205,7 +192,7 @@ public class UserController  {
 	@ResponseBody
 	public ResponseEntity<List<HUser>> searchUser(final @RequestBody QueryParam... qp) throws RestException {
 		List<HUser> result = new ArrayList<>();
-		final Gson gson = new Gson();
+		
 		try {
 			result = cloudMongoService.search(USER_COLLECTION_NAME, qp).stream()
 					.map(d -> gson.fromJson(gson.toJson(d), HUser.class)).collect(Collectors.toList());

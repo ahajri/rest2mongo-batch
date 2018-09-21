@@ -23,7 +23,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.FindOneAndReplaceOptions;
 
-
 /**
  * @author
  *         <p>
@@ -137,9 +136,6 @@ public class CloudMongoService {
 		}
 	}
 
-	
-	
-
 	/**
 	 * 
 	 * @param collectionName
@@ -229,7 +225,7 @@ public class CloudMongoService {
 			});
 
 			FindIterable<Document> iterable = collection.find(query);
-			if(iterable.first()==null) {
+			if (iterable.first() == null) {
 				throw new Exception(ErrorMessageEnum.FIND_DOCUMENT_KO.getMessage());
 			}
 			for (Document document : iterable) {

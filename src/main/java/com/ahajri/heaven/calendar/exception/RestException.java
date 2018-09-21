@@ -32,6 +32,10 @@ public class RestException extends Throwable {
 		this.httpStatus = httpStatus;
 		this.code = code;
 	}
+	public RestException(String message, Throwable ex, HttpStatus httpStatus) {
+		super(message, ex);
+		this.httpStatus = httpStatus;
+	}
 
 	public HttpStatus getHttpStatus() {
 		return httpStatus;

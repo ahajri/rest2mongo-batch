@@ -20,8 +20,6 @@ public class HUser {
 	@Email(message="Email not valid")
 	private String email;
 	
-	private String trelloUsername; 
-	
 	@NotNull(message="Password required")
 	private String password;
 	
@@ -31,7 +29,6 @@ public class HUser {
 	
 	
 	private String token;
-
 	
 	
 	public HUser() {
@@ -52,14 +49,7 @@ public class HUser {
 		this.email = email;
 	}
 
-	public String getTrelloUsername() {
-		return trelloUsername;
-	}
-
-	public void setTrelloUsername(String trelloUsername) {
-		this.trelloUsername = trelloUsername;
-	}
-
+	
 	public String getPassword() {
 		return password;
 	}
