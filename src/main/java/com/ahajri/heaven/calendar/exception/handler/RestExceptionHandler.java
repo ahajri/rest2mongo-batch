@@ -50,8 +50,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 			Throwable cause = optionalCause.get();
 			if (cause instanceof BusinessException) {
 				Throwable rootCause = ((BusinessException) cause).getCause();
-				technicalMessage = rootCause.getMessage();
 				functionalMessage = ((BusinessException) cause).getFunctionalMessage();
+				technicalMessage = rootCause.getMessage() != null ? rootCause.getMessage():functionalMessage;
+				
+				
 				if (rootCause instanceof EmptyResultDataAccessException) {
 					httpStatus = HttpStatus.NOT_FOUND;
 				} else {

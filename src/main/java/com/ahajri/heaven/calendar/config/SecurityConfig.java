@@ -68,8 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/events/**")
                 .authenticated()
-                .antMatchers("/users/**")
-                .authenticated();
+                /*.antMatchers("/users/**")
+                .authenticated()*/;
     }
 
     @Override

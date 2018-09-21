@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -80,6 +81,11 @@ public class LoginController {
 		result.setPassword(null);
 
 		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping(path="/status")
+	public ResponseEntity<String> getStatus(){
+		return ResponseEntity.ok("Status OK");
 	}
 
 }
