@@ -53,7 +53,7 @@ public class LoginController {
 
 		HUser result = new HUser();
 
-		QueryParam[] qps = new QueryParam[2];
+		QueryParam[] qps = new QueryParam[1];
 
 		qps[0] = new QueryParam("email", OperatorEnum.EQ.name(), loginRequest.getEmail());
 		List<HUser> foundUsers = null;
@@ -62,8 +62,7 @@ public class LoginController {
 			foundUsers = cloudMongoService.search(USER_COLLECTION_NAME, qps).stream()
 					.map(d -> gson.fromJson(gson.toJson(d), HUser.class)).collect(Collectors.toList());
 		} catch (BusinessException e) {
-			LOG.error(e.getMessage(), e);
-			e.printStackTrace();
+			LOG.error("#############", e);
 			throw new RestException(ErrorMessageEnum.USER_NOT_FOUND_FOR_EMAIL.getMessage(loginRequest.getEmail()), e,
 					HttpStatus.NOT_FOUND);
 		}
