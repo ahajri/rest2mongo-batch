@@ -65,7 +65,7 @@ public class LoginController {
 			throw new RestException(ErrorMessageEnum.USER_NOT_FOUND_FOR_EMAIL.getMessage(loginRequest.getEmail()), e,
 					HttpStatus.NOT_FOUND);
 		}
-
+LOG.info("####################"+foundUsers.toString());
 		if (foundUsers.size() > 1) {
 			throw new RestException(ErrorMessageEnum.MORE_THAN_ONE_USER_FOR_EMAIL.getMessage(loginRequest.getEmail()),
 					new Exception(ErrorMessageEnum.MORE_THAN_ONE_USER_FOR_EMAIL.getMessage(loginRequest.getEmail())),
