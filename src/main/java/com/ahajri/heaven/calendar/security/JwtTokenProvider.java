@@ -34,7 +34,7 @@ public class JwtTokenProvider {
     private String issuedBy;
 
     @Autowired
-    private HCSigsUserDetailsService userDetailsService;
+    private HCUserDetailsService userDetailsService;
 
     /**
      * Crétion de jeton JWT

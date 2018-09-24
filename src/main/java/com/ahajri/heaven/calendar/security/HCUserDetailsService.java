@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 @Service("userDetailsService")
-public class HCSigsUserDetailsService implements UserDetailsService {
+public class HCUserDetailsService implements UserDetailsService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(HCSigsUserDetailsService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(HCUserDetailsService.class);
 
 	private List<UserPrincipal> users;
 

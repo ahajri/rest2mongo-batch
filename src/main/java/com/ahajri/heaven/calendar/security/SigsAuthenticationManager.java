@@ -15,7 +15,7 @@ import com.ahajri.heaven.calendar.enums.ErrorMessageEnum;
 public class SigsAuthenticationManager implements AuthenticationManager {
 
     @Autowired
-    private HCSigsUserDetailsService sigsUserDetailsService;
+    private HCUserDetailsService sigsUserDetailsService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

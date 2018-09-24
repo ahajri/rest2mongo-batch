@@ -27,9 +27,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     getRequiredWebApplicationContext(request.getServletContext()).
                     getBean(JwtTokenProvider.class);
 
-            HCSigsUserDetailsService sigsUserDetailsService =  WebApplicationContextUtils.
+            HCUserDetailsService sigsUserDetailsService =  WebApplicationContextUtils.
                     getRequiredWebApplicationContext(request.getServletContext()).
-                    getBean(HCSigsUserDetailsService.class);
+                    getBean(HCUserDetailsService.class);
 
             String jwt = getJwtFromRequest(request);
             String username =  jwtTokenProvider.getUsernameFromJWT(jwt);
