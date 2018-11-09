@@ -1,0 +1,67 @@
+[
+	{
+		"name": "Danemark",
+		"towns": [
+			{
+				"name": "Copenhague",
+				"lat": 55.676098,
+				"lon": 12.568337,
+				"timeZone":"CET"
+			},
+			{
+				"name": "Aarhus",
+				"lat": 56.162939,
+				"lon": 10.203921,
+				"timeZone":"CET"
+			},
+			{
+				"name": "Odense",
+				"lat": 55.39594,
+				"lon": 10.38831,
+				"timeZone":"CET"
+			},
+			{
+				"name": "Aalborg",
+				"lat": 57.046707,
+				"lon": 9.935932,
+				"timeZone":"CET"
+			}
+		]
+	},
+	{
+		"name": "Sweden",
+		"towns": [
+			{
+				"name": "Stockholm",
+				"lat": 59.334591,
+				"lon": 18.063240,
+				"timeZone":"CET"
+			},
+			{
+				"name": "Gothenburg",
+				"lat": 57.708870,
+				"lon": 11.974560,
+				"timeZone":"CET"
+			},
+			{
+				"name": "Malmö",
+				"lat": 55.60587,
+				"lon": 13.00073,
+				"timeZone":"CET"
+			},
+			{
+				"name": "Uppsala",
+				"lat": 59.85882,
+				"lon": 17.63889,
+				"timeZone":"CET"
+			},
+			{
+				"name": "Västerås",
+				"lat": 59.61617,
+				"lon": 16.55276,
+				"timeZone":"CET"
+			}
+		]
+		
+	}
+]

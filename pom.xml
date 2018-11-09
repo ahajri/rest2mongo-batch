@@ -22,6 +22,7 @@
 			<name>Anis HAJRI</name>
 			<email>anis.hajri@gmail.com</email>
 			<roles>
+				<role>Product Owner</role>
 				<role>Architect</role>
 				<role>Developer</role>
 			</roles>
@@ -35,11 +36,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		 <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-            <version>5.0.7.RELEASE</version>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -163,6 +163,74 @@
 			<artifactId>java-jwt</artifactId>
 			<version>3.1.0</version>
 		</dependency>
+		
+		<!-- Rate limiting -->
+		<dependency>
+			<groupId>com.giffing.bucket4j.spring.boot.starter</groupId>
+			<artifactId>bucket4j-spring-boot-starter</artifactId>
+			<version>0.1.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+		</dependency>
+
+		<!-- GeoJson -->
+		<dependency>
+			<groupId>com.github.filosganga</groupId>
+			<artifactId>geogson-core</artifactId>
+			<version>1.2.21</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.filosganga</groupId>
+			<artifactId>geogson</artifactId>
+			<version>1.2.21</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>com.github.filosganga</groupId>
+			<artifactId>geogson-jts</artifactId>
+			<version>1.2.21</version>
+		</dependency>
+		
+		<!-- Kafka -->
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka_2.12</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>connect-api</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-tools</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		
+		<!-- RabbitMQ -->
+		 <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        
+		<!-- Batch -->
+		 <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-batch</artifactId>
+        </dependency>
+
 	</dependencies>
 
 

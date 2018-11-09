@@ -130,7 +130,7 @@ public class ThirdPartyRestTest {
 	@Test
 	public void tes2_PrayTime(){
 		try {
-			Map<String, Object> prayData = prayTimeService.getPrayTimeByLatLngDate(48.8566, 2.3522, new Date());
+			Map<String, Object> prayData = prayTimeService.getPrayTimeByLatLngDate(48.8566, 2.3522, new Date(),"CET");
 			System.out.println("#################"+prayData.toString());
 			Assert.assertTrue(true);
 		} catch (BusinessException e) {

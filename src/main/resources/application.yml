@@ -13,6 +13,9 @@ spring:
   servlet.multipart.file-size-threshold: 2KB
   servlet.multipart.max-file-size: 200MB
   servlet.multipart.max-request-size: 215MB
+  autoconfigure:
+    exclude:
+    - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 
 application:
   key: 2c060457dbaaf60054c1660c1502d45e
@@ -22,7 +25,7 @@ access:
 
 
 file:
-  upload-dir=./uploads
+  upload-dir=./hcalendar-uploads
 
 jwt:
   header: Authorization

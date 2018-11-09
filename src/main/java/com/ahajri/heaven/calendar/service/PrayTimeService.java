@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.ahajri.heaven.calendar.exception.BusinessException;
 
-
 public interface PrayTimeService {
 
 	/**
@@ -18,11 +17,15 @@ public interface PrayTimeService {
 	 *            longitude
 	 * @param date:
 	 *            date
-	 *            
+	 * 
+	 * @param timeZone:
+	 *            Tiem Zone
+	 * 
 	 * @return {@link Map} of pray time
 	 * 
 	 * @throws TechnicalException
 	 */
-	Map<String, Object> getPrayTimeByLatLngDate(double d, double e, Date date) throws BusinessException;
+	Map<String, Object> getPrayTimeByLatLngDate(double d, double e, Date date, String timeZone)
+			throws BusinessException;
 
 }

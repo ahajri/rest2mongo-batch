@@ -27,6 +27,7 @@ import com.ahajri.heaven.calendar.exception.BusinessException;
 import com.ahajri.heaven.calendar.service.PrayTimeService;
 import com.ahajri.heaven.calendar.utils.HCDateUtils;
 import com.ahajri.heaven.calendar.utils.HttpUtils;
+
 /**
  * 
  * @author ahajri
@@ -37,7 +38,7 @@ public class PrayTimeServiceImpl implements PrayTimeService {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public Map<String, Object> getPrayTimeByLatLngDate(final double lat, final double lng, final Date date)
+	public Map<String, Object> getPrayTimeByLatLngDate(final double lat, final double lng, final Date date, final String timeZone)
 			throws BusinessException {
 
 		final Map<String, Object> result = new HashMap<>();
@@ -60,11 +61,11 @@ public class PrayTimeServiceImpl implements PrayTimeService {
 					LocalTime.of(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), c.get(Calendar.SECOND)));
 			c.clear();
 			c.setTime(sunsetDate);
-			System.out.println("--->"+ZoneId.getAvailableZoneIds().toString());
+			System.out.println("--->" + ZoneId.getAvailableZoneIds().toString());
 			LocalDateTime aichaainDateTime = LocalDateTime
-					.of(LocalDate.now(ZoneId.of("Europe/Paris")),
+					.of(LocalDate.now(ZoneId.of(timeZone)),
 							LocalTime.of(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), c.get(Calendar.SECOND)))
-					.plusMinutes(15);
+					.plusMinutes(5);
 
 			String dayLength = (String) ((Map) resource.get("results")).get("day_length");
 
@@ -80,20 +81,22 @@ public class PrayTimeServiceImpl implements PrayTimeService {
 			int minutes = Integer.parseInt(dayLength.split(":")[1]);
 			int seconds = Integer.parseInt(dayLength.split(":")[2]);
 			int dayLengthSeconds = seconds + (minutes * 60) + (hours * 3600);
-			int dayHourChar3iSeconds =dayLengthSeconds/12;
+			int dayHourChar3iSeconds = dayLengthSeconds / 12;
 			int nightLengthSecond = (TimeConstants.SECONDS_IN_DAY - dayLengthSeconds);
-			int nightHourChar3iSeconds = nightLengthSecond/12;
+			int nightHourChar3iSeconds = nightLengthSecond / 12;
 			int fajrHour = 0;
-			if (nightHourChar3iSeconds>dayHourChar3iSeconds) {
+			if (nightHourChar3iSeconds > dayHourChar3iSeconds) {
 				fajrHour = nightHourChar3iSeconds;
 			} else {
 				fajrHour = dayHourChar3iSeconds;
 			}
-			
+
 			c.clear();
 			c.setTime(sunriseDate);
-			LocalDateTime fajrPrayDateTime = LocalDateTime.of(LocalDate.now(),
-					LocalTime.of(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), c.get(Calendar.SECOND))).minusSeconds(fajrHour);
+			LocalDateTime fajrPrayDateTime = LocalDateTime
+					.of(LocalDate.now(),
+							LocalTime.of(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), c.get(Calendar.SECOND)))
+					.minusSeconds(fajrHour);
 
 			String nightLength = HCDateUtils.getDurationString(nightLengthSecond);
 			c.clear();
@@ -104,7 +107,7 @@ public class PrayTimeServiceImpl implements PrayTimeService {
 					.plusSeconds(Long.parseLong("" + (nightLengthSecond / 2)));
 			LocalDateTime sunsetDateTime = LocalDateTime.of(LocalDate.now(),
 					LocalTime.of(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), c.get(Calendar.SECOND)));
-			
+
 			result.put(KeyConstants.DohrainPrayTime, dohrainDateTime);
 			result.put(KeyConstants.SunriseDateTime, sunriseDateTime);
 			result.put(KeyConstants.SunsetDateTime, sunsetDateTime);
@@ -115,9 +118,16 @@ public class PrayTimeServiceImpl implements PrayTimeService {
 			result.put(KeyConstants.FajrPrayTime, fajrPrayDateTime);
 		} catch (URISyntaxException | IOException | ParseException e) {
 			throw new BusinessException(e);
-		} 
+		}
 
 		return result;
+	}
+
+	
+	
+	public static void main(String[] args) throws BusinessException {
+		PrayTimeServiceImpl s = new PrayTimeServiceImpl();
+		System.out.println(s.getPrayTimeByLatLngDate(55.676098, 12.568337, new Date(),"CET").toString());
 	}
 
 }
