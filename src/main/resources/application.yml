@@ -13,10 +13,7 @@ spring:
   servlet.multipart.file-size-threshold: 2KB
   servlet.multipart.max-file-size: 200MB
   servlet.multipart.max-request-size: 215MB
-  autoconfigure:
-    exclude:
-    - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-
+ 
 application:
   key: 2c060457dbaaf60054c1660c1502d45e
 
@@ -32,3 +29,7 @@ jwt:
   expirationInSecond : 86400
   secret: YKscj]TyorRICKk]aNXrW4]YK9_i8Lp_v<@=f=AE:c6qw4JK5I>ahts:2G=0kceY
   issuedBy: HEAVEN-CALENDAR
+ 
+server:
+  port: 9000
+

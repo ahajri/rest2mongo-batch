@@ -7,11 +7,9 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.bson.Document;
-import org.bson.codecs.Codec;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.ahajri.heaven.calendar.constants.enums.OperatorEnum;
 import com.ahajri.heaven.calendar.enums.ErrorMessageEnum;
 import com.ahajri.heaven.calendar.exception.BusinessException;
 import com.ahajri.heaven.calendar.queries.QueryParam;

@@ -4,7 +4,6 @@ public class HRole {
 	
 	String name,description;
 	
-	
 
 	public HRole() {
 		

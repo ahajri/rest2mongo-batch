@@ -7,12 +7,8 @@ public class QueryParam{
 	private String operator;
 	
 	private Object value;
-	
-	
 
-	public QueryParam() {
-	}
-
+	
 	public QueryParam(String fieldName, String operator, Object value) {
 		super();
 		this.fieldName = fieldName;

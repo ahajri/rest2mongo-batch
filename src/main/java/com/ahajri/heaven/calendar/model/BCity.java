@@ -3,18 +3,18 @@ package com.ahajri.heaven.calendar.model;
 public class BCity {
 
 	private String name, timeZone;
-	private double lat, lon;
+	private double lat, lng;
 
 	public BCity() {
 		super();
 	}
 
-	public BCity(String name, String timeZone, double lat, double lon) {
+	public BCity(String name, String timeZone, double lat, double lng) {
 		super();
 		this.name = name;
 		this.timeZone = timeZone;
 		this.lat = lat;
-		this.lon = lon;
+		this.lng = lng;
 	}
 
 	public String getName() {
@@ -41,17 +41,16 @@ public class BCity {
 		this.lat = lat;
 	}
 
-	public double getLon() {
-		return lon;
+	public double getLng() {
+		return lng;
 	}
-
-	public void setLon(double lon) {
-		this.lon = lon;
+	public void setLng(double lng) {
+		this.lng = lng;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "BCity [name=" + name + ", timeZone=" + timeZone + ", lat=" + lat + ", lon=" + lon + "]";
+		return "BCity [name=" + name + ", timeZone=" + timeZone + ", lat=" + lat + ", lng=" + lng + "]";
 	}
 
 	@Override
@@ -61,7 +60,7 @@ public class BCity {
 		long temp;
 		temp = Double.doubleToLongBits(lat);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(lon);
+		temp = Double.doubleToLongBits(lng);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((timeZone == null) ? 0 : timeZone.hashCode());
@@ -79,7 +78,7 @@ public class BCity {
 		BCity other = (BCity) obj;
 		if (Double.doubleToLongBits(lat) != Double.doubleToLongBits(other.lat))
 			return false;
-		if (Double.doubleToLongBits(lon) != Double.doubleToLongBits(other.lon))
+		if (Double.doubleToLongBits(lng) != Double.doubleToLongBits(other.lng))
 			return false;
 		if (name == null) {
 			if (other.name != null)

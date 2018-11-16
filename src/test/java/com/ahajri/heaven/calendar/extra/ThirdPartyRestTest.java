@@ -28,7 +28,7 @@ import com.ahajri.heaven.calendar.constants.KeyConstants;
 import com.ahajri.heaven.calendar.constants.TimeConstants;
 import com.ahajri.heaven.calendar.constants.UrlConstants;
 import com.ahajri.heaven.calendar.exception.BusinessException;
-import com.ahajri.heaven.calendar.service.impl.PrayTimeServiceImpl;
+import com.ahajri.heaven.calendar.service.PrayTimeService;
 import com.ahajri.heaven.calendar.utils.HCDateUtils;
 import com.ahajri.heaven.calendar.utils.HttpUtils;
 
@@ -36,7 +36,7 @@ import com.ahajri.heaven.calendar.utils.HttpUtils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ThirdPartyRestTest {
 	
-	PrayTimeServiceImpl prayTimeService = new PrayTimeServiceImpl() ;
+	PrayTimeService prayTimeService = new PrayTimeService() ;
 
 	@SuppressWarnings({ "rawtypes" })
 	@Test
@@ -115,7 +115,7 @@ public class ThirdPartyRestTest {
 		result.put(KeyConstants.SunriseDateTime, sunsetDateTime);
 		result.put(KeyConstants.AichaainDateTime, aichaainDateTime);
 		result.put(KeyConstants.DayLength, dayLength);
-		result.put(KeyConstants.MidnightCharaiTime, midnightChar3iDateTime);
+		result.put(KeyConstants.MidnightChariiTime, midnightChar3iDateTime);
 		// TODO: Fajr Pray Time
 
 		System.out.println(result.toString());

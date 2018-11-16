@@ -1,5 +1,7 @@
 package com.ahajri.heaven.calendar.config;
 
+import java.util.LinkedList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,8 +18,6 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.ahajri.heaven.calendar.security.JwtAuthenticationEntryPoint;
 import com.ahajri.heaven.calendar.security.JwtAuthenticationFilter;
-
-import java.util.LinkedList;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

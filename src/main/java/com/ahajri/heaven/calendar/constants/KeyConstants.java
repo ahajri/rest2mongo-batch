@@ -20,18 +20,14 @@ public final class KeyConstants {
 	public static final String DayLength = "DayLength";
 	public static final String SunriseDateTime = "SunriseDateTime";
 	public static final String SunsetDateTime = "SunsetDateTime";
-	public static final String MidnightCharaiTime = "MidnightCharaiTime";
-	public static final String NighhtLength = "NighhtLength";
+	public static final String MidnightChariiTime = "MidnightChariiTime";
+	public static final String NightLength = "NightLength";
 
 	/** URL REST Param */
 	public static final String LATITUDE = "lat";
 	public static final String LONGITUDE = "lng";
 	public static final String DATE = "date";
 	
-	/**recurring constants*/
-	public static final String DAILY = "DAILY";
-	public static final String WEEKLY = "WEEKLY";
-	public static final String MONTHLY = "MONTHLY";
 	
 
 }

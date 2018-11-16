@@ -39,8 +39,6 @@ public class EventsController {
 
 	private static final String EVENT_COLLECTION = "event";
 
-	private static final String REQUEST_PARAM_DATE_FORMAT = "yyyyMMddHHmmss";
-	
 	private static final Logger LOG = LoggerFactory.getLogger(EventsController.class);
 
 	@Autowired
