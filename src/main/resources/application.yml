@@ -17,7 +17,7 @@ spring:
       enabled: false
  
 application:
-  key: {APP_KEY}
+  key: ${APP_KEY}
 
 access:
   token: ${ACCESS_TOKEN}
