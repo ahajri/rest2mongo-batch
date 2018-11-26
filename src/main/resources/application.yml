@@ -1,24 +1,26 @@
-#heroku config:set PROD_MONGODB=mongodb://hmidbuser:hmi141209@ds243931.mlab.com:43931/heaven_calendar
 mlab:
-  db.host: ds243931.mlab.com
-  db.name: heaven_calendar
-  db.user: hmidbuser
-  db.port: 43931
-  db.password: hmi141209
-  api.key: pSg2YGo6Qc53wzwsHVfJrEpB7jaPqMa6
+  db.host: ${MLAB_DB_HOST}
+  db.name: ${MLAB_DB_NAME}
+  db.user: ${MLAB_DB_USER}
+  db.port: ${MLAB_DB_PORT}
+  db.password: ${MLAB_DB_PASSWORD}
+  api.key: ${MLAB_API_KEY}
 
 spring:
-  data.mongodb.uri: mongodb://hmidbuser:hmi141209@ds243931.mlab.com:43931/heaven_calendar
+  data.mongodb.uri: mongodb://${MLAB_DB_USER}:${MLAB_DB_PASSWORD}@${MLAB_DB_HOST}:${MLAB_DB_PORT}/${MLAB_DB_NAME}
   servlet.multipart.enabled: true
   servlet.multipart.file-size-threshold: 2KB
   servlet.multipart.max-file-size: 200MB
   servlet.multipart.max-request-size: 215MB
+  batch:
+    job:
+      enabled: false
  
 application:
-  key: 2c060457dbaaf60054c1660c1502d45e
+  key: {APP_KEY}
 
 access:
-  token: 1ecf8afebc37821645280cde72a2bd293781820444cc272281f5f5444e5cb77f
+  token: ${ACCESS_TOKEN}
 
 
 file:
@@ -27,7 +29,7 @@ file:
 jwt:
   header: Authorization
   expirationInSecond : 86400
-  secret: YKscj]TyorRICKk]aNXrW4]YK9_i8Lp_v<@=f=AE:c6qw4JK5I>ahts:2G=0kceY
+  secret: ${JWT_SECRET}
   issuedBy: HEAVEN-CALENDAR
  
 server:
