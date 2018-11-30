@@ -30,6 +30,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.util.CollectionUtils;
 
 import com.ahajri.hc.batch.beans.BCountry;
 import com.ahajri.hc.exception.BusinessException;
@@ -101,8 +102,12 @@ public class BatchConfiguration {
 			@Override
 			public void write(List<? extends List<Document>> items) throws Exception {
 				try {
-					List<Document> flatDocs = items.stream().flatMap(List::stream).collect(Collectors.toList());
-					cloudMongoService.insertMany(EVENT_COLLECTION_NAME, flatDocs);
+					if(!CollectionUtils.isEmpty(items)) {
+						List<Document> flatDocs = items.stream().flatMap(List::stream).collect(Collectors.toList());
+						cloudMongoService.insertMany(EVENT_COLLECTION_NAME, flatDocs);
+					}else {
+						LOG.warn("No event to save ....");
+					}
 				} catch (BusinessException e) {
 					throw new RuntimeException(e);
 				}
@@ -128,7 +133,7 @@ public class BatchConfiguration {
 	}
 	// end::jobstep[]
 
-	@Scheduled(cron = "0 08 14 * * *")
+	@Scheduled(cron = "0 11 14 * * *")
 	public void startScandvPrayTimeJob() throws Exception {
 		LOG.info(" ====> Job Started at :" + new Date());
 		JobParameters param = new JobParametersBuilder().addString("JobID", String.valueOf(System.currentTimeMillis()))
