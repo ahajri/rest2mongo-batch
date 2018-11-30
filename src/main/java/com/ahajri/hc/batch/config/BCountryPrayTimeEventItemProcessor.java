@@ -100,7 +100,6 @@ public class BCountryPrayTimeEventItemProcessor implements ItemProcessor<List<BC
 				}
 			});
 		});
-		LOG.info("#####################"+docs);
 		return docs;
 	}
 

@@ -101,7 +101,8 @@ public class BatchConfiguration {
 			@Override
 			public void write(List<? extends List<Document>> items) throws Exception {
 				try {
-					if(!CollectionUtils.isEmpty(items)) {
+					LOG.info("#####################"+items);
+					if(!CollectionUtils.isEmpty(items) && items.size()>0) {
 						List<Document> flatDocs = items.stream().flatMap(List::stream).collect(Collectors.toList());
 						cloudMongoService.insertMany(EVENT_COLLECTION_NAME, flatDocs);
 					}else {
@@ -132,7 +133,7 @@ public class BatchConfiguration {
 	}
 	// end::jobstep[]
 
-	@Scheduled(cron = "0 24 14 * * *")
+	@Scheduled(cron = "0 29 14 * * *")
 	public void startScandvPrayTimeJob() throws Exception {
 		LOG.info(" ====> Job Started at :" + new Date());
 		JobParameters param = new JobParametersBuilder().addString("JobID", String.valueOf(System.currentTimeMillis()))
