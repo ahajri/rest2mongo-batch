@@ -193,7 +193,7 @@ public class CloudMongoService {
 				Object value = p.getValue();
 				switch (operator) {
 				case "EQ":
-					query.append(fieldName, value);
+					query.append(fieldName, new Document().append("$eq", value));
 					break;
 				case "NE":
 					query.append(fieldName, new Document().append("$ne", value));

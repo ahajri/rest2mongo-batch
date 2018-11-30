@@ -1,5 +1,6 @@
 package com.ahajri.hc.utils;
 
+import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -150,6 +151,8 @@ public final class HCDateUtils {
 		return asUtilDate(nextYears, ZoneId.systemDefault());
 	}
 
-	
+	public static Date convertToDateViaSqlTimestamp(LocalDateTime dateToConvert) {
+		return Timestamp.valueOf(dateToConvert);
+	}
 
 }
