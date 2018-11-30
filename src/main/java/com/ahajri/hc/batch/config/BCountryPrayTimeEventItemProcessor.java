@@ -91,7 +91,7 @@ public class BCountryPrayTimeEventItemProcessor implements ItemProcessor<List<BC
 						docs.add(prayTimeCityEventDoc);
 
 					} else {
-						LOG.debug(String.format("====>Pray time already exists for city: %s, month: %d, day:  %d",
+						LOG.info(String.format("====>Pray time already exists for city: %s, month: %d, day:  %d",
 								cityName, nowOfCity.getMonthValue(), nowOfCity.getDayOfMonth()));
 					}
 				} catch (BusinessException e) {
