@@ -98,7 +98,6 @@ public class BatchConfiguration {
 	@Bean
 	public ItemWriter<List<Document>> writer() {
 		return new ItemWriter<List<Document>>() {
-
 			@Override
 			public void write(List<? extends List<Document>> items) throws Exception {
 				try {
@@ -133,7 +132,7 @@ public class BatchConfiguration {
 	}
 	// end::jobstep[]
 
-	@Scheduled(cron = "0 11 14 * * *")
+	@Scheduled(cron = "0 22 14 * * *")
 	public void startScandvPrayTimeJob() throws Exception {
 		LOG.info(" ====> Job Started at :" + new Date());
 		JobParameters param = new JobParametersBuilder().addString("JobID", String.valueOf(System.currentTimeMillis()))
