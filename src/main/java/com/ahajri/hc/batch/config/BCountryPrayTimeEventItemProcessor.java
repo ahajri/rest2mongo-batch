@@ -1,5 +1,6 @@
 package com.ahajri.hc.batch.config;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -53,8 +54,11 @@ public class BCountryPrayTimeEventItemProcessor implements ItemProcessor<List<BC
 				final String cityTimeZone = c.getTimeZone();
 				final double lat = c.getLat();
 				final double lng = c.getLng();
+				
 				final LocalDateTime nowOfCity = LocalDateTime.now(ZoneId.of(cityTimeZone));
 
+				nowOfCity.minusDays(1);
+				
 				final QueryParam[] queryParams = new QueryParam[5];
 
 				queryParams[0] = new QueryParam("city_name", OperatorEnum.EQ.name(), cityName);
