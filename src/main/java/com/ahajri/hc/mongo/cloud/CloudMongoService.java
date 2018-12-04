@@ -230,11 +230,13 @@ public class CloudMongoService {
 				result.add(document);
 			}
 
-			close();
+			
 			return result;
 
 		} catch (Exception e) {
 			throw new BusinessException(e, ErrorMessageEnum.FIND_DOCUMENT_KO.getMessage());
+		}finally {
+			close();
 		}
 	}
 

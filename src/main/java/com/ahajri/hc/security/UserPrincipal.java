@@ -1,14 +1,20 @@
 package com.ahajri.hc.security;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
+/**
+ * 
+ * @author ahajri
+ *
+ */
 public class UserPrincipal implements UserDetails{
 
     /**
@@ -22,20 +28,25 @@ public class UserPrincipal implements UserDetails{
     @NotNull
     private String password;
 
-    private String role;
-    
-    
+    private List<String> roles;
     
 
 
-    public UserPrincipal(@NotNull String username, @NotNull String password) {
+    public UserPrincipal(@NotNull String username, @NotNull String password, List<String> roles) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.roles = roles;
+	}
+
+	public UserPrincipal(@NotNull String username, @NotNull String password) {
         this.username = username;
         this.password = password;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(() -> role);
+        return roles.stream().map(r -> new SimpleGrantedAuthority(r)).collect(Collectors.toList());
     }
 
     @Override
@@ -67,4 +78,38 @@ public class UserPrincipal implements UserDetails{
 	public String getUsername() {
 		return this.username;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserPrincipal other = (UserPrincipal) obj;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
+	
+	
+	
 }

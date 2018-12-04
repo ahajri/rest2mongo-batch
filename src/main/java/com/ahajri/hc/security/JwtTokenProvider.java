@@ -3,6 +3,7 @@ package com.ahajri.hc.security;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -46,9 +47,10 @@ public class JwtTokenProvider {
         UserPrincipal userPrincipal = new UserPrincipal((String) authentication.getPrincipal(), (String) authentication.getCredentials());
         String token = null;
         try {
-            Date now = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
-            Date expiry = Date.from(LocalDateTime.now().plusSeconds(Long.parseLong(expirationInSecond))
-                    .atZone(ZoneId.systemDefault()).toInstant());
+        	ZonedDateTime nowZonedTime = LocalDateTime.now().atZone(ZoneId.systemDefault());
+            Date now = Date.from(nowZonedTime.toInstant());
+            Date expiry = Date.from(nowZonedTime.plusSeconds(Long.parseLong(expirationInSecond))
+                    .toInstant());
             token = JWT.create()
                     .withIssuer(issuedBy)
                     .withIssuedAt(now)

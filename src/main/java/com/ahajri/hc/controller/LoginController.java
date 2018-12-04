@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,9 @@ import com.ahajri.hc.exception.RestException;
 import com.ahajri.hc.model.HUser;
 import com.ahajri.hc.mongo.cloud.CloudMongoService;
 import com.ahajri.hc.queries.QueryParam;
+import com.ahajri.hc.security.JwtTokenProvider;
 import com.ahajri.hc.security.LoginRequest;
+import com.ahajri.hc.security.UserPrincipal;
 import com.google.gson.Gson;
 
 @RestController
@@ -41,6 +44,9 @@ public class LoginController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
 
 	private static final Gson gson = new Gson();
 
@@ -77,8 +83,11 @@ public class LoginController {
 					new Exception(ErrorMessageEnum.WRONG_PASSWORD.getMessage()),
 					HttpStatus.BAD_REQUEST);
 		}
+		//
+		UsernamePasswordAuthenticationToken jwtAuth = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
+		String token = jwtTokenProvider.generateToken(jwtAuth);
 		result.setPassword(null);
-
+		result.setToken(token);
 		return ResponseEntity.ok(result);
 	}
 	
