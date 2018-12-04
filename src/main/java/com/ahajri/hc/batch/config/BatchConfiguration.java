@@ -132,7 +132,7 @@ public class BatchConfiguration {
 	}
 	// end::jobstep[]
 
-	@Scheduled(cron = "30 13 18 * * *")
+	@Scheduled(cron = "30 42 10 * * *")
 	public void startScandvPrayTimeJob() throws Exception {
 		LOG.info(" ====> Job Started at :" + new Date());
 		JobParameters param = new JobParametersBuilder().addString("JobID", String.valueOf(System.currentTimeMillis()))
