@@ -33,7 +33,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     getBean(HCUserDetailsService.class);
 
             String jwt = getJwtFromRequest(request);
-            String username =  jwtTokenProvider.getUsernameFromJWT(jwt);
+            String username = null;
+            if(jwt !=null) {
+            	 username =  jwtTokenProvider.getUsernameFromJWT(jwt);
+            }
+            
 
             if (StringUtils.hasText(jwt) && jwtTokenProvider.verifyToken(jwt, username)) {
 
