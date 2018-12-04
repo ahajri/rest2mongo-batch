@@ -57,7 +57,7 @@ public class BCountryPrayTimeEventItemProcessor implements ItemProcessor<List<BC
 				
 				final LocalDateTime nowOfCity = LocalDateTime.now(ZoneId.of(cityTimeZone));
 
-				nowOfCity.plusDays(2);
+				nowOfCity.plusDays(3);
 				
 				final QueryParam[] queryParams = new QueryParam[5];
 
