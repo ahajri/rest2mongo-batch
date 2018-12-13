@@ -15,6 +15,8 @@ import com.ahajri.hc.exception.BusinessException;
 import com.ahajri.hc.queries.QueryParam;
 import com.ahajri.hc.utils.JsonUtils;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.MongoClientOptions.Builder;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -66,7 +68,12 @@ public class CloudMongoService {
 	 * 
 	 */
 	private void begin() {
-		MongoClientURI uri = new MongoClientURI(cloudMongUrl);
+		Builder builder =MongoClientOptions.builder();
+		builder.cursorFinalizerEnabled(true);
+		builder.connectTimeout(15000);
+		builder.connectionsPerHost(10);
+		MongoClientURI uri = new MongoClientURI(cloudMongUrl,builder);
+		
 		client = new MongoClient(uri);
 		db = client.getDatabase(uri.getDatabase());
 	}

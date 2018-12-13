@@ -35,6 +35,7 @@ import org.springframework.util.CollectionUtils;
 import com.ahajri.hc.batch.beans.BCountry;
 import com.ahajri.hc.exception.BusinessException;
 import com.ahajri.hc.mongo.cloud.CloudMongoService;
+import com.mongodb.MongoOptions;
 
 @Configuration
 @EnableBatchProcessing
@@ -105,7 +106,7 @@ public class BatchConfiguration {
 						List<Document> flatDocs = items.stream().flatMap(List::stream).collect(Collectors.toList());
 						cloudMongoService.insertMany(EVENT_COLLECTION_NAME, flatDocs);
 					} else {
-						LOG.warn("No event to save ....");
+						LOG.warn("No document to save ....");
 					}
 				} catch (BusinessException e) {
 					throw new RuntimeException(e);
@@ -121,6 +122,8 @@ public class BatchConfiguration {
 
 	@Bean
 	public Job scandvPrayTimeJob() {
+		MongoOptions options = new MongoOptions();
+		
 		return jobBuilderFactory.get("scandvPrayTimeJob").incrementer(new RunIdIncrementer()).flow(step1()).end()
 				.build();
 	}
@@ -130,9 +133,9 @@ public class BatchConfiguration {
 		return stepBuilderFactory.get("step1").<List<BCountry>, List<Document>>chunk(10).reader(reader())
 				.processor(processor()).writer(writer()).build();
 	}
-	// end::jobstep[]
 
-	@Scheduled(cron = "30 01 10 * * *")
+	// end::jobstep[]
+	@Scheduled(cron = "30 59 09 * * *")
 	public void startScandvPrayTimeJob() throws Exception {
 		LOG.info(" ====> Job Started at :" + new Date());
 		JobParameters param = new JobParametersBuilder().addString("JobID", String.valueOf(System.currentTimeMillis()))
