@@ -15,9 +15,6 @@ spring:
   batch:
     job:
       enabled: false
-email:
-  id: ${ADMIN_EMAIL_ID}
-  password: ${ADMIN_EMAIL_PASSWORD}
  
 application:
   key: ${APP_KEY}
