@@ -45,11 +45,19 @@ public class BCountryPrayTimeEventItemProcessor implements ItemProcessor<List<BC
 	@Autowired
 	private CloudMongoService cloudMongoService;
 	
-	@Value("${email.id}")
+	
 	protected static String emailId;
+	protected static String emailPassword;
+	
+	@Value("${email.id}")
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
 	
 	@Value("${email.password}")
-	protected static String emailPassword;
+	public void setEmailPassword(String emailPassword) {
+		this.emailPassword = emailPassword;
+	}
 	
 	
 	private static void readInbox() throws MessagingException, IOException {
