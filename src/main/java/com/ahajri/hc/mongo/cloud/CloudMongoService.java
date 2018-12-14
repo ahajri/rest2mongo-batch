@@ -68,12 +68,11 @@ public class CloudMongoService {
 	 * 
 	 */
 	private void begin() {
-		Builder builder =MongoClientOptions.builder();
+		Builder builder = MongoClientOptions.builder();
 		builder.cursorFinalizerEnabled(true);
 		builder.connectTimeout(15000);
 		builder.connectionsPerHost(10);
 		MongoClientURI uri = new MongoClientURI(cloudMongUrl,builder);
-		
 		client = new MongoClient(uri);
 		db = client.getDatabase(uri.getDatabase());
 	}

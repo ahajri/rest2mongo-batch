@@ -122,7 +122,6 @@ public class BatchConfiguration {
 
 	@Bean
 	public Job scandvPrayTimeJob() {
-		MongoOptions options = new MongoOptions();
 		
 		return jobBuilderFactory.get("scandvPrayTimeJob").incrementer(new RunIdIncrementer()).flow(step1()).end()
 				.build();
@@ -135,7 +134,7 @@ public class BatchConfiguration {
 	}
 
 	// end::jobstep[]
-	@Scheduled(cron = "30 59 09 * * *")
+	@Scheduled(cron = "30 05 10 * * *")
 	public void startScandvPrayTimeJob() throws Exception {
 		LOG.info(" ====> Job Started at :" + new Date());
 		JobParameters param = new JobParametersBuilder().addString("JobID", String.valueOf(System.currentTimeMillis()))
