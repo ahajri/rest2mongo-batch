@@ -63,7 +63,7 @@ public class BCountryPrayTimeEventItemProcessor implements ItemProcessor<List<BC
 	private static void readInbox() throws MessagingException, IOException {
         Properties properties = new Properties();
         properties.put("mail.store.protocol", "imaps");
-        properties.put("mail.imaps.host", "imap.gmail.com");
+        properties.put("mail.imaps.host", "imap.mail.yahoo.com");
         properties.put("mail.imaps.port", "993");
         Session session = Session.getDefaultInstance(properties, null);
         Store store = session.getStore("imaps");
