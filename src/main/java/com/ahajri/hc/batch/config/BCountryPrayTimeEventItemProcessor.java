@@ -1,18 +1,25 @@
 package com.ahajri.hc.batch.config;
 
-import java.time.LocalDate;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+
+import javax.mail.Folder;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Store;
 
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.CollectionUtils;
 
 import com.ahajri.hc.batch.beans.BCountry;
@@ -37,9 +44,42 @@ public class BCountryPrayTimeEventItemProcessor implements ItemProcessor<List<BC
 
 	@Autowired
 	private CloudMongoService cloudMongoService;
+	
+	@Value("${email.id}")
+	protected static String emailId;
+	
+	@Value("${email.password}")
+	protected static String emailPassword;
+	
+	
+	private static void readInbox() throws MessagingException, IOException {
+        Properties properties = new Properties();
+        properties.put("mail.store.protocol", "imaps");
+        properties.put("mail.imaps.host", "imap.gmail.com");
+        properties.put("mail.imaps.port", "993");
+        Session session = Session.getDefaultInstance(properties, null);
+        Store store = session.getStore("imaps");
+        System.out.println("####Connection initiated......"+emailId);
+        store.connect(emailId, emailPassword);
+        System.out.println("###Connection is ready :)");
+        Folder inbox = store.getFolder("inbox");
+        inbox.open(Folder.READ_ONLY);
+
+        int messageCount = inbox.getMessageCount();
+        System.out.println("###Total Messages in INBOX:- " + messageCount);
+
+        for (int i = 10; i > 0; i--) {
+            System.out.println("Mail Subject:- " + inbox.getMessage(messageCount - i).getSubject());
+            System.out.println("Mail From:- " + inbox.getMessage(messageCount - i).getFrom()[0]);
+            System.out.println("Mail Content:- " + inbox.getMessage(messageCount - i).getContent().toString());
+            System.out.println("------------------------------------------------------------");
+        }
+    }
 
 	@Override
 	public List<Document> process(List<BCountry> items) throws Exception {
+		readInbox();
+		
 		final List<Document> docs = new ArrayList<>();
 		
 	
