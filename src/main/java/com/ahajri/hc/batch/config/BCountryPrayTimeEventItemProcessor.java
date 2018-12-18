@@ -82,11 +82,13 @@ public class BCountryPrayTimeEventItemProcessor implements ItemProcessor<List<BC
             System.out.println("Mail Content:- " + inbox.getMessage(messageCount - i).getContent().toString());
             System.out.println("------------------------------------------------------------");
         }
+        store.close();
+        
     }
 
 	@Override
 	public List<Document> process(List<BCountry> items) throws Exception {
-		readInbox();
+		//readInbox();
 		
 		final List<Document> docs = new ArrayList<>();
 		
