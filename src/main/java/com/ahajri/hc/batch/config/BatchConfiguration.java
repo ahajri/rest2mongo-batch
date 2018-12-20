@@ -2,6 +2,7 @@ package com.ahajri.hc.batch.config;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -55,6 +56,8 @@ public class BatchConfiguration {
 
 	@Autowired
 	private CloudMongoService cloudMongoService;
+	
+	private final AtomicInteger docCount = new AtomicInteger(0);
 
 	@Bean
 	public ResourcelessTransactionManager transactionManager() {
@@ -103,12 +106,14 @@ public class BatchConfiguration {
 			public void write(List<? extends List<Document>> items) throws Exception {
 				try {
 					if (!CollectionUtils.isEmpty(items) && items.size() > 0) {
+						docCount.set(items.size());
 						List<Document> flatDocs = items.stream().flatMap(List::stream).collect(Collectors.toList());
 						cloudMongoService.insertMany(EVENT_COLLECTION_NAME, flatDocs);
 					} else {
 						LOG.warn("No document to save ....");
 					}
 				} catch (BusinessException e) {
+					docCount.set(0);
 					throw new RuntimeException(e);
 				}
 			}
@@ -134,12 +139,23 @@ public class BatchConfiguration {
 	}
 
 	// end::jobstep[]
-	@Scheduled(cron = "30 16 10 * * *")
-	public void startScandvPrayTimeJob() throws Exception {
+	@Scheduled(cron = "30 32 10 * * *")
+	public void startScandvPrayTimeJob() throws Exception, BusinessException {
+		Document batchInfos = new Document();
+		batchInfos.put("name", "SCANDINAVIAN_PRAY_TIME_BATCH");
 		LOG.info(" ====> Job Started at :" + new Date());
 		JobParameters param = new JobParametersBuilder().addString("JobID", String.valueOf(System.currentTimeMillis()))
 				.toJobParameters();
 		JobExecution execution = jobLauncher.run(scandvPrayTimeJob(), param);
 		LOG.info(" ====> Job finished with status : " + execution.getStatus());
+		batchInfos.put("status", execution.getStatus().name());
+		batchInfos.put("end_time", execution.getEndTime());
+		batchInfos.put("batch_id", execution.getId());
+		batchInfos.put("failure_exceptions", execution.getFailureExceptions().toString());
+		batchInfos.put("end_time", execution.getStartTime());
+		batchInfos.put("version", execution.getVersion());
+		batchInfos.put("doc_inserted", docCount.get());
+		docCount.set(0);
+		cloudMongoService.insertOne("batch_histo", batchInfos);
 	}
 }
