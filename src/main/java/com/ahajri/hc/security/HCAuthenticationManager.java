@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import com.ahajri.hc.enums.ErrorMessageEnum;
 
 @Component(BeanIds.AUTHENTICATION_MANAGER)
-public class SigsAuthenticationManager implements AuthenticationManager {
+public class HCAuthenticationManager implements AuthenticationManager {
 
     @Autowired
     private HCUserDetailsService sigsUserDetailsService;

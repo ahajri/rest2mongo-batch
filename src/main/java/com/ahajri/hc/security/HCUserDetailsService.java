@@ -1,12 +1,10 @@
 package com.ahajri.hc.security;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import com.ahajri.hc.constants.enums.OperatorEnum;
 import com.ahajri.hc.exception.BusinessException;
-import com.ahajri.hc.model.HRole;
 import com.ahajri.hc.model.HUser;
 import com.ahajri.hc.mongo.cloud.CloudMongoService;
 import com.ahajri.hc.queries.QueryParam;

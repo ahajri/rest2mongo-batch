@@ -1,0 +1,39 @@
+mlab:
+  db.host: ${MLAB_DB_HOST}
+  db.name: ${MLAB_DB_NAME}
+  db.user: ${MLAB_DB_USER}
+  db.port: ${MLAB_DB_PORT}
+  db.password: ${MLAB_DB_PASSWORD}
+  api.key: ${MLAB_API_KEY}
+
+spring:
+  data.mongodb.uri: mongodb://${MLAB_DB_USER}:${MLAB_DB_PASSWORD}@${MLAB_DB_HOST}:${MLAB_DB_PORT}/${MLAB_DB_NAME}
+  servlet.multipart.enabled: true
+  servlet.multipart.file-size-threshold: 2KB
+  servlet.multipart.max-file-size: 200MB
+  servlet.multipart.max-request-size: 215MB
+  batch:
+    job:
+      enabled: false
+email:
+  id: ${ADMIN_EMAIL_ID}
+  password: ${ADMIN_EMAIL_PASSWORD}
+ 
+application:
+  key: ${APP_KEY}
+
+access:
+  token: ${ACCESS_TOKEN}
+
+
+file:
+  upload-dir=./hcalendar-uploads
+
+jwt:
+  header: Authorization
+  expirationInSecond : 86400
+  secret: ${JWT_SECRET}
+  issuedBy: HEAVEN-CALENDAR
+ 
+server:
+  port: 9000
