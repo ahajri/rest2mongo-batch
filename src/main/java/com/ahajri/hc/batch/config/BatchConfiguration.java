@@ -139,7 +139,7 @@ public class BatchConfiguration {
 	}
 
 	// end::jobstep[]
-	@Scheduled(cron = "30 32 10 * * *")
+	@Scheduled(cron = "30 35 10 * * *")
 	public void startScandvPrayTimeJob() throws Exception, BusinessException {
 		Document batchInfos = new Document();
 		batchInfos.put("name", "SCANDINAVIAN_PRAY_TIME_BATCH");
@@ -150,9 +150,9 @@ public class BatchConfiguration {
 		LOG.info(" ====> Job finished with status : " + execution.getStatus());
 		batchInfos.put("status", execution.getStatus().name());
 		batchInfos.put("end_time", execution.getEndTime());
-		batchInfos.put("batch_id", execution.getId());
+		batchInfos.put("id", execution.getId());
 		batchInfos.put("failure_exceptions", execution.getFailureExceptions().toString());
-		batchInfos.put("end_time", execution.getStartTime());
+		batchInfos.put("start_time", execution.getStartTime());
 		batchInfos.put("version", execution.getVersion());
 		batchInfos.put("doc_inserted", docCount.get());
 		docCount.set(0);
