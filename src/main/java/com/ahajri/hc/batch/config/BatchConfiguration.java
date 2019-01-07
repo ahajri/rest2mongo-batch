@@ -43,6 +43,7 @@ import com.mongodb.MongoOptions;
 @EnableScheduling
 public class BatchConfiguration {
 
+	private static final String BATCH_HISTO_COLLECTION = "batch_histo";
 	private static final String SCANDINAVIAN_COUNTRIES_JSON_FILE = "scandinavian-countries.json";
 	private static final String EVENT_COLLECTION_NAME = "event";
 
@@ -139,7 +140,7 @@ public class BatchConfiguration {
 	}
 
 	// end::jobstep[]
-	@Scheduled(cron = "30 58 10 * * *")
+	@Scheduled(cron = "30 26 13 * * *")
 	public void startScandvPrayTimeJob() throws Exception, BusinessException {
 		Document batchInfos = new Document();
 		batchInfos.put("name", "SCANDINAVIAN_PRAY_TIME_BATCH");
@@ -156,6 +157,6 @@ public class BatchConfiguration {
 		batchInfos.put("version", execution.getVersion());
 		batchInfos.put("doc_inserted", docCount.get());
 		docCount.set(0);
-		cloudMongoService.insertOne("batch_histo", batchInfos);
+		cloudMongoService.insertOne(BATCH_HISTO_COLLECTION, batchInfos);
 	}
 }
