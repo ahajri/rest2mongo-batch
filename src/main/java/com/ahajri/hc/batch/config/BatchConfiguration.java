@@ -139,8 +139,7 @@ public class BatchConfiguration {
 				.processor(processor()).writer(writer()).build();
 	}
 
-	// end::jobstep[]
-	@Scheduled(cron = "30 26 13 * * *")
+	@Scheduled(cron = "30 21 10 * * *")
 	public void startScandvPrayTimeJob() throws Exception, BusinessException {
 		Document batchInfos = new Document();
 		batchInfos.put("name", "SCANDINAVIAN_PRAY_TIME_BATCH");
