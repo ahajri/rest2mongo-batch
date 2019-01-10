@@ -139,7 +139,7 @@ public class BatchConfiguration {
 				.processor(processor()).writer(writer()).build();
 	}
 
-	@Scheduled(cron = "30 34 17 * * *")
+	@Scheduled(cron = "30 46 15 * * *")
 	public void startScandvPrayTimeJob() throws Exception, BusinessException {
 		Document batchInfos = new Document();
 		batchInfos.put("name", "SCANDINAVIAN_PRAY_TIME_BATCH");
