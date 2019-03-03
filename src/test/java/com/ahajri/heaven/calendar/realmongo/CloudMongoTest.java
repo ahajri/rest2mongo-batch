@@ -14,8 +14,8 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.ahajri.hc.exception.BusinessException;
-import com.ahajri.hc.mongo.cloud.CloudApiMongoService;
+import com.knoor.soft.exception.BusinessException;
+import com.knoor.soft.mongo.cloud.CloudApiMongoService;
 
 @RunWith(SpringRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -40,21 +40,25 @@ public class CloudMongoTest {
 
 	public void testBUpdate() {
 		// TODO Auto-generated method stub
+		assertTrue(true);
 
 	}
 
 	public void testCFindAll() {
 		// TODO Auto-generated method stub
+		assertTrue(true);
 
 	}
 
 	public void testDFindByCriteria() {
 		// TODO Auto-generated method stub
+		assertTrue(true);
 
 	}
 
 	public void testEDeleteAllByCriteria() {
 		// TODO Auto-generated method stub
+		assertTrue(true);
 
 	}
 

@@ -24,13 +24,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.ahajri.hc.constants.KeyConstants;
-import com.ahajri.hc.constants.TimeConstants;
-import com.ahajri.hc.constants.UrlConstants;
-import com.ahajri.hc.exception.BusinessException;
-import com.ahajri.hc.service.PrayTimeService;
-import com.ahajri.hc.utils.HCDateUtils;
-import com.ahajri.hc.utils.HttpUtils;
+import com.knoor.soft.constants.KeyConstants;
+import com.knoor.soft.constants.TimeConstants;
+import com.knoor.soft.constants.UrlConstants;
+import com.knoor.soft.exception.BusinessException;
+import com.knoor.soft.service.PrayTimeService;
+import com.knoor.soft.utils.HCDateUtils;
+import com.knoor.soft.utils.HttpUtils;
 
 @RunWith(SpringRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
