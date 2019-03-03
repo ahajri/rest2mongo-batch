@@ -56,7 +56,7 @@ public class BatchConfiguration {
 
 	@Autowired
 	private CloudMongoService cloudMongoService;
-	
+
 	private final AtomicInteger docCount = new AtomicInteger(0);
 
 	@Bean
@@ -127,7 +127,7 @@ public class BatchConfiguration {
 
 	@Bean
 	public Job scandvPrayTimeJob() {
-		
+
 		return jobBuilderFactory.get("scandvPrayTimeJob").incrementer(new RunIdIncrementer()).flow(step1()).end()
 				.build();
 	}
@@ -138,7 +138,7 @@ public class BatchConfiguration {
 				.processor(processor()).writer(writer()).build();
 	}
 
-	@Scheduled(cron = "30 23 11 * * *")
+	@Scheduled(cron = "30 23 23 * * *")
 	public void startScandvPrayTimeJob() throws Exception, BusinessException {
 		Document batchInfos = new Document();
 		batchInfos.put("name", "SCANDINAVIAN_PRAY_TIME_BATCH");

@@ -2,6 +2,7 @@ package com.knoor.soft.mongo.cloud;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -253,6 +254,11 @@ public class CloudMongoService {
 		if (client != null) {
 			client.close();
 		}
+	}
+
+	public Collection<Document> findDuplicateDocs(String collectionName) throws BusinessException {
+		begin();
+		return null;
 	}
 
 }

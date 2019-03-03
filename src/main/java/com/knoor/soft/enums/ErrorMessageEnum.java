@@ -17,7 +17,8 @@ public enum ErrorMessageEnum {
 	EMAIL_TOKEN("Email %s already token"), 
 	FIND_DOCUMENT_KO("Find document failed"), 
 	SEARCH_DOCUMENT_KO("Search document failed"), 
-	SEARCH_USER_KO("Search user failed"), 
+	SEARCH_USER_KO("Search user failed"),
+	DUPLICATE_HADITH_KO("No duplicate hadith(s) found"),
 	UNAUTHORIZED_RESOURCE("Acesss unauthorized !"),
 	 AUTHENTIFICATION_KO("Authentication failed !"),;
 
