@@ -60,7 +60,7 @@ public class BatchConfiguration {
 	private final AtomicInteger docCount = new AtomicInteger(0);
 
 	@Bean
-	public ResourcelessTransactionManager transactionManager() {
+	public ResourcelessTransactionManager transactionManagerA() {
 		return new ResourcelessTransactionManager();
 	}
 
@@ -73,14 +73,14 @@ public class BatchConfiguration {
 	}
 
 	@Bean
-	public JobRepository jobRepository(MapJobRepositoryFactoryBean factory) throws Exception {
+	public JobRepository jobRepositoryA(MapJobRepositoryFactoryBean factory) throws Exception {
 		return (JobRepository) factory.getObject();
 	}
 
 	private SimpleJobLauncher jobLauncher;
 
 	@Bean
-	public SimpleJobLauncher jobLauncher(JobRepository jobRepository) {
+	public SimpleJobLauncher jobLauncherA(JobRepository jobRepository) {
 		jobLauncher.setJobRepository(jobRepository);
 		return jobLauncher;
 	}

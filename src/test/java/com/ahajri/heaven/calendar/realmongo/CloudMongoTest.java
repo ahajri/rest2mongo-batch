@@ -38,24 +38,28 @@ public class CloudMongoTest {
 		assertTrue(true);
 	}
 
+	@Test
 	public void testBUpdate() {
 		// TODO Auto-generated method stub
 		assertTrue(true);
 
 	}
 
+	@Test
 	public void testCFindAll() {
 		// TODO Auto-generated method stub
 		assertTrue(true);
 
 	}
 
+	@Test
 	public void testDFindByCriteria() {
 		// TODO Auto-generated method stub
 		assertTrue(true);
 
 	}
 
+	@Test
 	public void testEDeleteAllByCriteria() {
 		// TODO Auto-generated method stub
 		assertTrue(true);
